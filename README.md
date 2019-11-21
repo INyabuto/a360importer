@@ -2,7 +2,7 @@
 
 A set up to upload A360 Nigeria legacy files to production
 
-# Getting started
+## Getting started
 
 ```r
 
