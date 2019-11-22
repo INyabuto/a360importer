@@ -6,7 +6,7 @@ A set up to upload A360 Nigeria legacy files to production
 
 ```r
 
-devtools::install_github("INyabuto/a360ngimport")
+devtools::install_github("INyabuto/a360importer")
 
 ```
 

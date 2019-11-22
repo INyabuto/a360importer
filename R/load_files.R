@@ -27,8 +27,6 @@ load_files <- function(path = NULL, sheet, guess_max = 30000, skip = 1){
     stop("System path to the directory with files must be specified", call. = FALSE)
   }
 
-  files
-
 }
 
 
