@@ -1,11 +1,12 @@
-Package: a360ngimport
+Package: a360importer
 Type: Package
-Title: Import A360 Nigeria Data
+Title: Import A360 Data
 Version: 0.1.0
 Authors@R: person("Isaiah", "Nyabuto", email = "isaiahnyabuto@gmail.com",
                   role = c("aut", "cre"))
 Maintainer: The package maintainer <isaiahnyabuto@gmail.com>
-Description: Upload A360 Nigeria Historical data to production.
+Description: Command-line utility tools preparing and loading A360 legacy files
+    in production server (data.psi-mis.org).
 License: What license is it under?
 Encoding: UTF-8
 LazyData: true
