@@ -1,6 +1,6 @@
 # Upload A360 Nigeria Legacy files
 
-<img src="inst/icon/a360importer.png" height="300"/>
+<img src="inst/icon/a360importer.png" height="139" align = "right"/>
 
 A set up to upload A360 Nigeria legacy files to production
 
