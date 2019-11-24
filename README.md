@@ -1,4 +1,4 @@
-# Upload A360 Nigeria Legacy files
+# a360importer
 
 <img src="inst/icon/a360importer.png" height="139" align = "right"/>
 
