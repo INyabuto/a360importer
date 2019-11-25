@@ -4,7 +4,7 @@
 \alias{remove_empty_rows}
 \title{Remove empty rows}
 \usage{
-remove_empty_rows(df)
+remove_empty_rows(dt)
 }
 \arguments{
 \item{df}{A data frame}
