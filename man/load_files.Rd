@@ -4,7 +4,7 @@
 \alias{load_files}
 \title{Load A360 NG legacy files into R}
 \usage{
-load_files(path = NULL, sheet, guess_max = 30000, skip = 1)
+load_files(path = NULL)
 }
 \arguments{
 \item{path}{System path to the directory with data}

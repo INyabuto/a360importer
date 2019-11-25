@@ -10,22 +10,28 @@
 #'\dontrun{
 #'load_files(file.path(Sys.getenv("HOME"),"data")
 #'}
-load_files <- function(path = NULL, sheet, guess_max = 30000, skip = 1){
+load_files <- function(path = NULL){
 
   if(!is.null(path)){
 
-    files <- vector("list", length(list.files(path, pattern = ".xlsx")))
+    files <- vector("list", length(list.files(path, pattern = ".csv")))
 
-    file_names <- list.files(path, pattern = ".xlsx")
+    file_names <- list.files(path, pattern = ".csv")
 
     for (i in seq_along(files)) {
 
-      files[[i]] <- readxl::read_excel(file.path(path,file_names[i]), sheet = sheet, guess_max = guess_max, skip = skip)
+      files[[i]] <- read.csv(file.path(path, file_names[i]), stringsAsFactors = F, header = T)
+
+      #files[[i]] <- readxl::read_excel(file.path(path,file_names[i]), sheet = sheet, skip = skip, col_types = col_type)
     }
 
   }else{
     stop("System path to the directory with files must be specified", call. = FALSE)
   }
+
+  names(files) <- file_names
+
+  files
 
 }
 
@@ -47,5 +53,7 @@ to_r_date <- function(x, origin = "1900-01-01", ...){
     }
   }
 }
+
+
 
 #/Users/isaiahnyabuto/Documents/Workspace/A360/NG data upload/legacy files/NG A360 Master Data- Final Cleaned April & May 19
