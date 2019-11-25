@@ -20,7 +20,7 @@ load_files <- function(path = NULL){
 
     for (i in seq_along(files)) {
 
-      files[[i]] <- read.csv(file.path(path, file_names[i]), stringsAsFactors = F, header = T)
+      files[[i]] <- data.table::fread(file.path(path, file_names[i]))
 
       #files[[i]] <- readxl::read_excel(file.path(path,file_names[i]), sheet = sheet, skip = skip, col_types = col_type)
     }
@@ -45,12 +45,17 @@ load_files <- function(path = NULL){
 #'@return R date type object
 to_r_date <- function(x, origin = "1900-01-01", ...){
 
-  if (!is.na(x)){
-    if(nchar(x) < 7){
-      as.Date(as.numeric(x), origin = origin, ...)
-    }else{
+  if (!is.na(x) && nchar(x) < 7){
+    as.Date(as.numeric(x), origin = origin, ...)
+  }
+
+  if (!is.na(x) &&  grepl("/", x)){
       as.Date(x, format = "%d/%m/%Y")
-    }
+  }
+
+  if (!is.na(x) && grepl("-", x)){
+      as.Date(x, format = "%d-%b-%y")
+
   }
 }
 
