@@ -12,22 +12,28 @@
 #'}
 load_files <- function(path = NULL){
 
-  if(!is.null(path)){
+  if (!is.null(path)){
 
     files <- vector("list", length(list.files(path, pattern = ".csv")))
 
+    # stop if path is empty
+    if (length(files) == 0){
+      stop("Ensure you are in the correct path or the directory has a csv file")
+    }
+
     file_names <- list.files(path, pattern = ".csv")
+
 
     for (i in seq_along(files)) {
 
       files[[i]] <- data.table::fread(file.path(path, file_names[i]))
 
-      #files[[i]] <- readxl::read_excel(file.path(path,file_names[i]), sheet = sheet, skip = skip, col_types = col_type)
     }
 
   }else{
     stop("System path to the directory with files must be specified", call. = FALSE)
   }
+
 
   names(files) <- file_names
 
