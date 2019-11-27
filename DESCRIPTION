@@ -12,7 +12,10 @@ Encoding: UTF-8
 LazyData: true
 VignetteBuilder: knitr
 imports:
-    data.table
+    data.table,
+    dplyr,
+    httr,
+    jsonlite
 Suggests: 
     knitr,
     rmarkdown,
