@@ -32,8 +32,9 @@ remove_nas <- function(dt){
 #'
 #' \code{select_att} selects columns names and types to transform from the attendance sheets.
 #'
-#' @param dt a data.table or a list of data.frames
-#' @return a cleaned dataset
+#' @param dt A data.table or data,.frame
+#' @param cols A vector of characters
+#' @return A chopped data.table or data.frame
 select_att <- function(dt = NULL, cols = NULL){
 
   if (!is.null(dt) && is.null(cols)){
@@ -55,6 +56,10 @@ select_att <- function(dt = NULL, cols = NULL){
 #' Select Columns to Transform
 #'
 #' \code{select_prov} select column names and types to transform from the serv ice provison sheets.
+#'
+#' @param dt A data.table or data.frame
+#' @param cols A vector of characters
+#' @return a chopped data.table or data.frame
 select_prov <- function(dt = NULL, cols = NULL){
 
   if (!is.null(dt) && is.null(cols)){
@@ -74,8 +79,8 @@ select_prov <- function(dt = NULL, cols = NULL){
 
 #' Get data frame names
 #'
-#' @param dt a list of data tables
-#' @return dt names
+#' @param dt A list of data.table or data.frames
+#' @return A vector of characters
 dt_names <- function(dt){
 
   # get the names of the files

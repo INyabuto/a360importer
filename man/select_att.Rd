@@ -7,10 +7,12 @@
 select_att(dt = NULL, cols = NULL)
 }
 \arguments{
-\item{dt}{a data.table or a list of data.frames}
+\item{dt}{A data.table or data,.frame}
+
+\item{cols}{A vector of characters}
 }
 \value{
-a cleaned dataset
+A chopped data.table or data.frame
 }
 \description{
 \code{select_att} selects columns names and types to transform from the attendance sheets.

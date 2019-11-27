@@ -6,6 +6,14 @@
 \usage{
 select_prov(dt = NULL, cols = NULL)
 }
+\arguments{
+\item{dt}{A data.table or data.frame}
+
+\item{cols}{A vector of characters}
+}
+\value{
+a chopped data.table or data.frame
+}
 \description{
 \code{select_prov} select column names and types to transform from the serv ice provison sheets.
 }

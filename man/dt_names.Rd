@@ -7,10 +7,10 @@
 dt_names(dt)
 }
 \arguments{
-\item{dt}{a list of data tables}
+\item{dt}{A list of data.table or data.frames}
 }
 \value{
-dt names
+A vector of characters
 }
 \description{
 Get data frame names
