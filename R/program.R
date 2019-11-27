@@ -1,4 +1,4 @@
-#' GET NG RH A360 - A2. 9ja Girls & MMA Events program data element
+#' GET NG RH A360 - A2. 9ja Girls & MMA Events program data elements
 #'
 #' \code{prog_des_9ja} Retrieves all the data elements from NG RH A360 - A2. 9ja Girls & MMA Events program.
 #'
@@ -9,9 +9,11 @@ prog_des_9ja <- function(){
   path = "api/29/programStages/BCnz7XE4olS"
   query = "fields=programStageDataElements[dataElement[id,name]]"
 
+  ua <- user_agent("https://github.com/INyabuto/a360importer")
+
   url <- modify_url("https://data.psi-mis.org", path = path, query = query)
 
-  resp <- GET(url)
+  resp <- GET(url, ua)
 
   if (http_type(resp) != "application/json"){
     stop("PSI - MIS API did not return json", call. = FALSE)
@@ -57,12 +59,14 @@ print.prog_des_9ja <- function(x,...){
 #'
 #'@return An S3 object
 prog_des_prov <- function(){
-  path = "api/29/programStages/ainkgKtBFFQ"
-  query = "fields=programStageDataElements[dataElement[id,name]]"
+  path <- "api/29/programStages/ainkgKtBFFQ"
+  query <-  "fields=programStageDataElements[dataElement[id,name]]"
+
+  ua <- user_agent("https://github.com/INyabuto/a360importer")
 
   url = modify_url("https://data.psi-mis.org", path = path, query = query)
 
-  resp <- GET(url)
+  resp <- GET(url, ua)
 
   if (http_type(resp) != "application/json"){
     stop("PSI MIS API did not return a json", call. = FALSE)
