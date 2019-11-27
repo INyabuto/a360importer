@@ -22,9 +22,7 @@ remove_empty_rows <- function(dt){
 #' @return a table without NAs
 remove_nas <- function(dt){
 
-  for (col in names(dt)) {
-    set(dt, i = which(is.na(dt[[col]])), j = col, value = "")
-  }
+  dt[is.na(dt)] <- ""
 
 }
 
@@ -74,7 +72,6 @@ select_prov <- function(dt = NULL, cols = NULL){
     dplyr::select(dt,cols)
   }
 }
-
 
 
 #' Get data frame names
