@@ -33,11 +33,11 @@ remove_nas <- function(dt){
 #' @param dt A data.table or data,.frame
 #' @param cols A vector of characters
 #' @return A chopped data.table or data.frame
-select_att <- function(dt = NULL, cols = NULL){
+select_att <- function(dt = NULL, cols = NULL, mma = FALSE){
 
   if (!is.null(dt) && is.null(cols)){
 
-    cols <- c("State","Region","LGA","Ward","Facility","Name","ID #", "Age","Date Calculation","Program Activity")
+    cols <- c("State","Region","LGA","Ward","Facility","Type of Facility","Name","ID #", "Age (Formula)","Date Calculation","Program Activity")
 
     dplyr::select(dt,cols)
   }
@@ -46,9 +46,31 @@ select_att <- function(dt = NULL, cols = NULL){
     dplyr::select(dt, cols)
   }
 
+  if (mma){
+
+    session_count <- "Attendance Frequency"
+
+    if (session_count %in% names(dt)){
+
+      cols[length(cols)+1] <- session_count
+      dplyr::select(dt,cols)
+    }
+
+  }
+
 
 
 }
+
+
+# Program Activity
+# Name
+# Date Calculation
+# ID #
+# Age (Formula)
+# Type of Facility
+# Attendance Frequency
+# Facility
 
 
 #' Select Columns to Transform
