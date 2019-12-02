@@ -6,7 +6,7 @@ It provides key functions for manipulating and uploading A360 historical files e
 
 - `load_files()` effectively loads A360 legacy files into R
 - `remove_empty_rows()` checks for the empty rows on the file and removes them.
-- `remove_nas()` check for 'NAs' and turns them into an empty strings ""
+- `remove_nas()` check for 'NAs' and turns them into an empty strings
 - `generate_payload()` compiles the files into a payload ready for upload. 
 - `upload()` push the payloads into production  
 
