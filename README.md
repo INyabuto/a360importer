@@ -11,7 +11,7 @@ It provides key functions for manipulating and uploading A360 historical files e
 - `upload()` push the payloads into production  
 
 
-## Getting started
+## Installation
 
 ```r
 
