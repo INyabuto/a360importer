@@ -1,4 +1,7 @@
 # a360importer <img src="inst/icon/a360importer.png" height="139" align = "right"/>
+<!-- badges: start -->
+[![Lifecycle: experimental](https://img.shields.io/badge/lifecycle-experimental-orange.svg)](https://www.tidyverse.org/lifecycle/#experimental)
+<!-- badges: end -->
 
 a360importer is an R package used in the preparation, transformation and loading of A360 historical file into [production](https://data.psi-mis.org). 
 
