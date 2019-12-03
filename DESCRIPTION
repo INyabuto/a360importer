@@ -7,7 +7,7 @@ Authors@R: person("Isaiah", "Nyabuto", email = "isaiahnyabuto@gmail.com",
 Maintainer: The package maintainer <isaiahnyabuto@gmail.com>
 Description: Command-line utility tools preparing and loading A360 legacy files
     in production server (data.psi-mis.org).
-License: What license is it under?
+License: GPL-3
 Encoding: UTF-8
 LazyData: true
 VignetteBuilder: knitr
