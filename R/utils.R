@@ -50,4 +50,115 @@ dt_names <- function(dt){
 
 }
 
+# transform mma attendance freq.
+attendance_freq <- function(x){
 
+  switch(x,
+         `1` = "Session 1",
+         `2` = "Session 2",
+         `3` = "Session 3",
+         `4` = "Session 4",
+         stop(sprintf("Unknown input in [%s] in Attendance_freq",x))
+  )
+
+}
+
+#' GET optionSet details of a data element
+#'
+#' @param uid A dataElement uid
+#' @return an S3 object with the optsionSet id, options, path and the response.
+de_optionset <- function(uid = NULL){
+
+  ua <- user_agent("https://github.com/INyabuto/a360importer")
+
+
+
+  if (!is.null(id)){
+
+    path = paste0("api/dataElements/",uid)
+
+    url <- modify_url("https://data.psi-mis.org", path = path, query = paste0("fields=optionSet[id]"))
+
+    resp <- GET(url, ua)
+
+  }
+
+  if (http_type(resp) != "application/json"){
+    stop("PSI MIS API did not return a json", call. = FALSE)
+  }
+
+  parsed <- fromJSON(content(resp,"text"))
+
+  # Turn HTTP errors into R
+
+  if (http_error(resp)){
+    stop(sprintf("PSI - MIS API request failed with status [%s]\n%s\n<%s>",
+                 status_code(resp),
+                 parsed$message,
+                 "https://docs.dhis2.org/master/en/developer/html/dhis2_developer_manual.html"),
+         call. = FALSE)
+  }
+
+
+  structure(
+    list(optionSet_id = parsed$optionSet$id,
+         options = de_options(parsed$optionSet$id)$options,
+         path = path,
+         response = resp),
+    class = "de_optionset_id"
+  )
+
+}
+
+
+print.de_optionset <- function(x,...){
+  cat("[PSI - MIS ", x$path, "]\n", sep = "")
+  str(x)
+  invisible(x)
+}
+
+
+
+#' GET options in a optionSet
+#'
+#' @param uid An optionSet uid
+#' @return an S3 object with the content, path and the response.
+de_options <- function(uid = NULL){
+
+  ua <- user_agent("https://github.com/INyabuto/a360importer")
+
+  if (!is.null(uid)){
+
+    path = paste0("api/optionSets/",uid)
+
+    url <- modify_url("https://data.psi-mis.org", path = path, query = paste0("fields=options[id,code]"))
+
+    resp <- GET(url, ua)
+
+  }
+
+  if (http_type(resp) != "application/json"){
+    stop("PSI MIS API did not return a json", call. = FALSE)
+  }
+
+  parsed <- fromJSON(content(resp,"text"))
+
+
+  # Turn HTTP errors into R
+
+  if (http_error(resp)){
+    stop(sprintf("PSI - MIS API request failed with status [%s]\n%s\n<%s>",
+                    status_code(resp),
+                    parsed$message,
+                    "https://docs.dhis2.org/master/en/developer/html/dhis2_developer_manual.html"),
+            call. = FALSE)
+  }
+
+  structure(
+    list(content = parsed,
+         path = path,
+         response = resp),
+    class = "de_options"
+    )
+
+}
