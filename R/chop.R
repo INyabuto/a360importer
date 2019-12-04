@@ -2,6 +2,9 @@
 #'
 #' \code{select_att} selects columns names and types to transform from the attendance sheets.
 #'
+#' It selects the following columns: State, Region, LGA, Ward, Facility, Type of Facility, Name, ID #,
+#' Age, Date Calculation and Program Activity.
+#'
 #' @param dt A data.table or data,.frame
 #' @param cols A vector of characters
 #' @return A chopped data.table or data.frame
@@ -29,6 +32,9 @@ select_att <- function(dt = NULL, cols = NULL){
 #'
 #' \code{select_att_mma} selects columns names and types to transform from the MMA attendance sheets
 #'
+#' It selects the following columns: State, Region, LGA, Ward, Facility, Girl ID, Age, Session 1 Date
+#' and Attendance Frequency.
+#'
 #' @param dt A data.table or data.frame
 #' @param cols A vector of characters
 #' @return A chopped data.table or data.frame
@@ -39,7 +45,7 @@ select_att_mma <- function(dt = NULL, cols = NULL){
   }
 
   if (!is.null(dt) && is.null(cols)){
-    cols <- c("State","Region","LGA","Ward","Facility","Girl ID","Session 1 Date", "Attendance Frequency")
+    cols <- c("State","Region","LGA","Ward","Facility","Girl ID","Age","Session 1 Date", "Attendance Frequency")
 
     dplyr::select(dt, cols)
   }
@@ -56,19 +62,13 @@ select_att_mma <- function(dt = NULL, cols = NULL){
 
 
 
-# Program Activity
-# Name
-# Date Calculation
-# ID #
-# Age (Formula)
-# Type of Facility
-# Attendance Frequency
-# Facility
-
-
 #' Select Columns to Transform
 #'
-#' \code{select_prov} select column names and types to transform from the serv ice provison sheets.
+#' \code{select_prov} selects column names and types to transform from the service provison sheets.
+#'
+#' It selects the following columns: State, Region, LGA , Ward, Facility, Type of Facility, Date Calculation,
+#' ID #, Age (Formula), Program Entry Point, Current Method,Used EC/Condoms last sex, Pregnant?, Method recieved
+#' and Received Condoms as a dual Method`
 #'
 #' @param dt A data.table or data.frame
 #' @param cols A vector of characters
@@ -81,9 +81,7 @@ select_prov <- function(dt = NULL, cols = NULL){
 
   if (!is.null(dt) && is.null(cols)){
     cols <- c("State","Region","LGA","Ward","Facility","Type of Facility","ID #", "Age (Formula)","Date Calculation","Program Entry Point",
-              "Visit Type","Rec. Counseling","Current Method","Used EC/Condoms last sex","Signed assent/Consent (All)","15-17 Given Consent Form",
-              "15-17 Returned Consent Form", "Pregnant?", "Method Received","Received Condoms as a dual Method", "Currently Using","Took up Method", "Provider Outcome Status", "STI Treatment","Date of treatment",
-              "Case Treated","Drugs Given", "QTY of Drugs Given")
+              "Current Method","Used EC/Condoms last sex","Pregnant?", "Method Received","Received Condoms as a dual Method")
     dplyr::select(dt,cols)
   }
 
@@ -97,3 +95,5 @@ select_prov <- function(dt = NULL, cols = NULL){
 
 
 }
+
+
