@@ -23,7 +23,7 @@ dt_names <- function(dt){
 dt_method_recieved <- function(dt){
 
   # get all the methods in the file
-  dt_methods <- sapply(dt, function(x) x[,`Method Received`])
+  dt_methods <- sapply(dt, function(x) x[,"Method Received"])
 
   dt_methods_c <- do.call(c, dt_methods)
 
@@ -36,7 +36,7 @@ dt_method_recieved <- function(dt){
 dt_program_entries <- function(dt){
 
   # get all the entry points
-  dt_programs <- sapply(dt, function(x) x[,`Program Entry Point`])
+  dt_programs <- sapply(dt, function(x) x[,"Program Entry Point"])
 
   dt_programs_c <- unique(do.call(c, dt_programs))
 
@@ -44,23 +44,23 @@ dt_program_entries <- function(dt){
 }
 
 dt_current_method <- function(dt){
-  dt_methods <- sapply(dt, function(x) x[,`Current Method`])
+  dt_methods <- sapply(dt, function(x) x[,"Current Method"])
 
   unique(do.call(c,dt_methods))
 }
 
 condom_at_last_sex <- function(dt){
-  dt_condom_last_sex <- sapply(dt, function(x) x[,`Used EC/Condoms last sex`])
+  dt_condom_last_sex <- sapply(dt, function(x) x[,"Used EC/Condoms last sex"])
 
   unique(do.call(c,dt_condom_last_sex))
 }
 
 pregancy_results <- function(dt){
-  dt_results <- sapply(dt, function(x) x[,`Pregnant?`])
+  dt_results <- sapply(dt, function(x) x[,"Pregnant?"])
   unique(do.call(c, dt_results))
 }
 
 condom_as_dual <- function(dt){
-  dt_condom <- sapply(dt, function(x) x[,`Received Condoms as a dual Method`])
+  dt_condom <- sapply(dt, function(x) x[, "Received Condoms as a dual Method"])
   unique(do.call(c, dt_condom))
 }
