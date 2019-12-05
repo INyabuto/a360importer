@@ -28,41 +28,6 @@ remove_nas <- function(dt){
 
 
 
-#' Get data frame names
-#'
-#' @param dt A list of data.table or data.frames
-#' @return A vector of characters
-dt_names <- function(dt){
-
-  # get the names of the files
-  if (length(dt) > 0) {
-
-    dt_names <- sapply(dt, names)
-
-    dt_names_c <- do.call(c, dt_names)
-
-    dt_names <- unique(dt_names_c)
-
-    names(dt_names) <- dt_names
-
-    dt_names
-  }
-
-}
-
-# transform mma attendance freq.
-attendance_freq <- function(x){
-
-  switch(x,
-         `1` = "Session 1",
-         `2` = "Session 2",
-         `3` = "Session 3",
-         `4` = "Session 4",
-         stop(sprintf("Unknown input in [%s] in Attendance_freq",x))
-  )
-
-}
-
 #' GET optionSet details of a data element
 #'
 #' @param uid A dataElement uid
@@ -102,7 +67,7 @@ de_optionset <- function(uid = NULL){
 
   structure(
     list(optionSet_id = parsed$optionSet$id,
-         options = de_options(parsed$optionSet$id)$options,
+         options = de_options(parsed$optionSet$id)$content$options,
          path = path,
          response = resp),
     class = "de_optionset_id"
@@ -131,7 +96,7 @@ de_options <- function(uid = NULL){
 
     path = paste0("api/optionSets/",uid)
 
-    url <- modify_url("https://data.psi-mis.org", path = path, query = paste0("fields=options[id,code]"))
+    url <- modify_url("https://data.psi-mis.org", path = path, query = paste0("fields=options[id,code,name]"))
 
     resp <- GET(url, ua)
 
@@ -161,4 +126,13 @@ de_options <- function(uid = NULL){
     class = "de_options"
     )
 
+}
+
+#' Retrive Data element uid
+#'@param x A vector of character string
+de_uid <- function(x){
+
+  index <- str_which(meta$dhis2, coll(str_trim(x), ignore_case = T))
+
+  meta$id[index]
 }
