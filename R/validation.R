@@ -1,3 +1,43 @@
+#' Run validation
+#'
+#' \code{run_validation_sp} runs validation scripts in the service provision sheets.
+#'
+#' @param dt A list of data.tables or data.frames
+#' @return an S3 type object
+run_validation_sp <- function(dt = NULL){
+
+  if (is.null(dt)){
+    stop("A list of data.tables or data.frames must be specified", call. = F)
+  }
+
+  pb <- txtProgressBar(min = 0, max = length(dt), style = 3)
+
+  dt2 <- vector("list", length = length(dt))
+
+  for (i in seq_along(dt)){
+    Sys.sleep(0.1)
+
+    dt2[[i]] <- validate_sp(dt[[i]])
+
+    setTxtProgressBar(pb, i)
+  }
+  dt
+}
+
+
+validate_sp <- function(df){
+  df$`Method Received` <- sapply(df$`Method Received`, function(y) validate_method_recieved(y))
+  df$`Program Entry Point` <- sapply(df$`Program Entry Point`, function(y) validate_program_entry_point(y))
+  df$`Current Method` <- sapply(df$`Current Method`, function(y) validate_current_method(y))
+  df$`Used EC/Condoms last sex` <- sapply(df$`Used EC/Condoms last sex`, function(y) validate_ec_last_sex(y))
+  df$`Pregnant?` <- sapply(df$`Pregnant?`, function(y) validate_preg_results(y))
+  df$`Received Condoms as a dual Method` <- sapply(df$`Received Condoms as a dual Method`, function(y) validate_condom_as_dual(y))
+
+  df
+}
+
+
+
 #' Validate method recieved
 #'
 #' \code{validate_method_recieved} validates the different method options listed in the service provision sheets
@@ -8,10 +48,10 @@
 validate_method_recieved <- function(x = NULL){
 
   # get id of method recieved and options
-  uid <- de_uid("Method taken up (old program)")
-  options <- de_optionset(uid)$options
+  # uid <- de_uid("Method taken up (old program)")
+  # options <- de_optionset(uid)$options
 
-  if (!is.null(x)){
+  if (!is.null(x) & x != ""){
 
     switch(str_trim(x),
            "0: No Method" = "None (Counselling only)",
@@ -23,6 +63,7 @@ validate_method_recieved <- function(x = NULL){
            "3c: Injection - Depo Provera" = "Injectable: Depo-Provera",
            "3C: Injection - Depo Provera" = "Injectable: Depo-Provera",
            "3d: Injection - Sayana Press" = "Injectable: Sayana Press",
+           "3d: Injection - Sayana press" = "Injectable: Sayana Press",
            "4a: Pills - Microgynon" = "Pills - Microgynon",
            "4b: Pills - Combination 3" = "Pills - Combination3",
            "4c: Pills - Exluton" = "Pills - Excluton",
@@ -46,7 +87,7 @@ validate_method_recieved <- function(x = NULL){
 #' @return An existing frequency in DHIS2
 validate_attendance_freq <- function(x = NULL){
 
-  if (!is.null(x)){
+  if (!is.null(x) & x != ""){
     switch(str_trim(x),
            `1` = "Session 1",
            `2` = "Session 2",
@@ -68,10 +109,10 @@ validate_attendance_freq <- function(x = NULL){
 validate_program_entry_point <- function(x = NULL){
 
   # get the de_uid and options
-  uid <- de_uid("Program attended by the girl")
-  options <- de_optionset(uid)$options
+  # uid <- de_uid("Program attended by the girl")
+  # options <- de_optionset(uid)$options
 
-  if (!is.null(x)){
+  if (!is.null(x) & x != ""){
 
     switch(str_trim(x),
            "Walk-in 9JA Girls Hub" = "Walk-in 9JA Girls Hub",
@@ -82,7 +123,7 @@ validate_program_entry_point <- function(x = NULL){
            "LFH Class (MMA)" = "LFH Class (MMA)",
            "LFH Reach Out (MMA)" = "LFH Reach Out (MMA)",
            "Walk-in MMA Spoke" = "Walk-in MMA Spoke",
-           stop(sprintf("Unknown input [%s] sheet in column: Program Entry Point", x), call. = FALSE))
+           stop(sprintf("Unknown input [%s] in column: Program Entry Point", x), call. = FALSE))
   }
 
 
@@ -99,16 +140,17 @@ validate_program_entry_point <- function(x = NULL){
 validate_current_method <- function(x = NULL){
 
   # get de uid and options
-  uid <- de_uid("Current method")
-  options <- de_optionset(uid)$options
+  # uid <- de_uid("Current method")
+  # options <- de_optionset(uid)$options
 
-  if (!is.null(x)){
+  if (!is.null(x) & x != ""){
     switch(str_trim(x),
            "0: No Method" = "None",
            "1: IUCD" = "IUCD",
            "2: Implant" = "Implant",
            "3: Injection" = "Injectable",
            "4: Pills" = "Pills",
+           "5: Condoms" = "Condom",
            "1: IUD" = "IUCD",
            "3d: Injection - Sayana Press" = "Injectable",
            "3c: Injection - Depo Provera" = "Injectable",
@@ -127,10 +169,10 @@ validate_current_method <- function(x = NULL){
 #'@return An existing option in DHIS2
 validate_ec_last_sex <- function(x = NULL){
  # get de_uid and options
-  uid <- de_uid("EC or condoms used at last sex - Old Program")
-  options <- de_optionset(uid)$options
+  #uid <- de_uid("EC or condoms used at last sex - Old Program")
+  #options <- de_optionset(uid)$options
 
-  if (!is.null(x)){
+  if (!is.null(x) & x != ""){
     switch(str_trim(x),
            "Neither" = "Neither",
            "Condom" = "Condoms",
@@ -150,10 +192,10 @@ validate_ec_last_sex <- function(x = NULL){
 #' @return An existing option in DHIS2
 validate_preg_results <- function(x = NULL){
 
-  uid <- de_uid("Pregnancy status")
-  options <- de_optionset(uid)$options
+  # uid <- de_uid("Pregnancy status")
+  # options <- de_optionset(uid)$options
 
-  if (!is.null(x)){
+  if (!is.null(x) & x != ""){
     switch(str_trim(x),
            "Not Pregnant" = "Not pregnant",
            "Pregnant" = "Pregnant",
@@ -171,7 +213,7 @@ validate_preg_results <- function(x = NULL){
 #' @return An existing option in DHIS2
 validate_condom_as_dual <- function(x = NULL){
 
-  if (!is.null(x)){
+  if (!is.null(x) & x != ""){
     switch(str_trim(x),
            "No" = "false",
            "Yes" = "true",
