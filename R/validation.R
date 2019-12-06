@@ -3,29 +3,26 @@
 #' \code{run_validation_sp} runs validation scripts in the service provision sheets.
 #'
 #' @param dt A list of data.tables or data.frames
-#' @return an S3 type object
+#' @return A validated list
 run_validation_sp <- function(dt = NULL){
 
   if (is.null(dt)){
     stop("A list of data.tables or data.frames must be specified", call. = F)
   }
 
-  pb <- txtProgressBar(min = 0, max = length(dt), style = 3)
+  if (!is.null(dt)){
+    dt2 <- lapply(dt, function(x) validate_sp(x))
 
-  dt2 <- vector("list", length = length(dt))
+    names(d2) <- names(dt)
 
-  for (i in seq_along(dt)){
-    Sys.sleep(0.1)
-
-    dt2[[i]] <- validate_sp(dt[[i]])
-
-    setTxtProgressBar(pb, i)
+    dt2
   }
-  dt
+
 }
 
 
 validate_sp <- function(df){
+
   df$`Method Received` <- sapply(df$`Method Received`, function(y) validate_method_recieved(y))
   df$`Program Entry Point` <- sapply(df$`Program Entry Point`, function(y) validate_program_entry_point(y))
   df$`Current Method` <- sapply(df$`Current Method`, function(y) validate_current_method(y))
@@ -44,7 +41,7 @@ validate_sp <- function(df){
 #' against those provided in NG RH A360 - Provider Client Record program.
 #'
 #' @param x A vector of character or string
-#' @retun An existing method in DHIS2
+#' @return An existing method in DHIS2
 validate_method_recieved <- function(x = NULL){
 
   # get id of method recieved and options
@@ -70,7 +67,7 @@ validate_method_recieved <- function(x = NULL){
            "6a: Condom - Male" = "Condoms - Male",
            "6b: Condom - Female" = "Condoms - Female",
            "7: Emergency pill" = "Emergency Pill",
-           stop(sprintf("Unkown input in [%s] sheet in column: Method Recieved", x), call. = FALSE)
+           stop(sprintf("Unkown input [%s] in column: Method Recieved", x), call. = FALSE)
     )
 
   }
@@ -209,7 +206,7 @@ validate_preg_results <- function(x = NULL){
 #' \code{validate_condom_as_dual}  Validates the different options listed in the service provision sheets
 #' against the options in NG RH A360 - Provider Client Records program in DHIS2.
 #'
-#' @pram x A vector of character string
+#' @param x A vector of character string
 #' @return An existing option in DHIS2
 validate_condom_as_dual <- function(x = NULL){
 
