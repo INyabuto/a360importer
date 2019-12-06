@@ -6,6 +6,9 @@
 \usage{
 validate_condom_as_dual(x = NULL)
 }
+\arguments{
+\item{x}{A vector of character string}
+}
 \value{
 An existing option in DHIS2
 }

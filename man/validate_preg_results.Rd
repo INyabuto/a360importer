@@ -14,5 +14,5 @@ An existing option in DHIS2
 }
 \description{
 \code{validate_preg_results} validates the pregnacy results in the service provision sheets against those provided
-in the NG RH A360 - Provider Client Records program inn DHIS2.
+in the NG RH A360 - Provider Client Records program in DHIS2.
 }

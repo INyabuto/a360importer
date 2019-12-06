@@ -9,6 +9,9 @@ validate_method_recieved(x = NULL)
 \arguments{
 \item{x}{A vector of character or string}
 }
+\value{
+An existing method in DHIS2
+}
 \description{
 \code{validate_method_recieved} validates the different method options listed in the service provision sheets
 against those provided in NG RH A360 - Provider Client Record program.
