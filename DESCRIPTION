@@ -15,7 +15,9 @@ imports:
     data.table,
     dplyr,
     httr,
-    jsonlite
+    jsonlite,
+    plyr,
+    stringr
 Suggests: 
     knitr,
     rmarkdown,
