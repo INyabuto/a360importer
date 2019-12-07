@@ -136,3 +136,13 @@ de_uid <- function(x){
 
   meta$id[index]
 }
+
+
+# summary report
+summarize_files <- function(dt){
+  dt <- data.frame(file = names(dt),
+                rows = sapply(dt, nrow),
+                stringsAsFactors = F)
+  rownames(dt) <- NULL
+  dt
+}
