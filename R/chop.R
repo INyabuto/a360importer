@@ -1,3 +1,31 @@
+#' Chop Attendance sheets
+#'
+#' \code{chop_att} transforms attendance sheets in preparation for the next stage.
+#'
+#' @param dt A list of data.tables or data.frames
+#' @return transformed list
+chop_sp <- function(dt = NULL){
+  if (is.null(dt)){
+    stop("A list of data.tables or data.frames must be specified", call. = F)
+  }
+
+  if (!is.null(dt)  & length(dt) > 1){
+
+    dt2 <- vector("list", length = length(dt))
+
+    for (i in seq_along(dt)){
+
+      dt2[[i]] <- select_prov(dt[[i]])
+
+      print(names(dt[i]))
+    }
+
+  }
+}
+
+
+
+
 #' Select Colums to Transform
 #'
 #' \code{select_att} selects columns names and types to transform from the attendance sheets.
@@ -14,8 +42,14 @@ select_att <- function(dt = NULL, cols = NULL){
     stop("An attendance sheet must be specified", call. = FALSE)
   }
 
+
+
   if (!is.null(dt) && is.null(cols)){
     cols <- c("State","Region","LGA","Ward","Facility","Type of Facility","Name","ID #", "Age","Date Calculation","Program Activity")
+
+    if (all(!cols %in% names(dt))){
+      stop(sprintf("Columns are missing in %s sheet", dt))
+    }
 
     dplyr::select(dt,cols)
   }
@@ -45,7 +79,7 @@ select_att_mma <- function(dt = NULL, cols = NULL){
   }
 
   if (!is.null(dt) && is.null(cols)){
-    cols <- c("State","Region","LGA","Ward","Facility","Girl ID","Age","Session 1 Date", "Attendance Frequency")
+    cols <- c("State","Region","LGA","Ward","Facility","Girl ID","Age","Session 1 Date", "Program Activity","Attendance Frequency")
 
     dplyr::select(dt, cols)
   }
