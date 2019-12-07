@@ -2,65 +2,91 @@
 #'
 #' @param dt A list of data.table or data.frames
 #' @return A vector of characters
-dt_names <- function(dt){
+dt_names <- function(dt = NULL){
 
   # get the names of the files
-  if (length(dt) > 0) {
-
-    dt_names <- sapply(dt, names)
-
-    dt_names_c <- do.call(c, dt_names)
-
-    dt_names <- unique(dt_names_c)
-
-    names(dt_names) <- dt_names
-
-    dt_names
+  if (!is.null(dt)) {
+    sapply(dt, names) %>%
+      do.call(c, .) %>%
+      unique(.)
   }
 
 }
 
-dt_method_recieved <- function(dt){
+dt_method_recieved <- function(dt = NULL){
 
-  # get all the methods in the file
-  dt_methods <- sapply(dt, function(x) x[,"Method Received"])
+  if (!is.null(dt)){
+    sapply(dt, function(x) x[,"Method Received"]) %>%
+      do.call(c, .) %>%
+      unique(.)
+  }
+}
 
-  dt_methods_c <- do.call(c, dt_methods)
+dt_program_entries <- function(dt = NULL){
 
-  dt_methods <- unique(dt_methods_c)
+  if (!is.null(dt)){
+    sapply(dt, function(x) x[,"Program Entry Point"]) %>%
+      do.call(c, .) %>%
+      unique(.)
+  }
+}
 
-  dt_methods
+dt_current_method <- function(dt = NULL){
+
+  if (!is.null(dt)){
+    sapply(dt, function(x) x[,"Current Method"]) %>%
+      do.call(c, .) %>%
+      unique(.)
+  }
 
 }
 
-dt_program_entries <- function(dt){
+condom_at_last_sex <- function(dt = NULL){
 
-  # get all the entry points
-  dt_programs <- sapply(dt, function(x) x[,"Program Entry Point"])
+  if (!is.null(dt)){
+    sapply(dt, function(x) x[,"Used EC/Condoms last sex"]) %>%
+      do.call(c, .) %>%
+      unique(.)
+  }
 
-  dt_programs_c <- unique(do.call(c, dt_programs))
-
-  dt_programs_c
 }
 
-dt_current_method <- function(dt){
-  dt_methods <- sapply(dt, function(x) x[,"Current Method"])
+pregancy_results <- function(dt = NULL){
 
-  unique(do.call(c,dt_methods))
+  if (!is.null(dt)){
+    sapply(dt, function(x) x[,"Pregnant?"]) %>%
+      do.call(c, .) %>%
+      unique(.)
+  }
+
 }
 
-condom_at_last_sex <- function(dt){
-  dt_condom_last_sex <- sapply(dt, function(x) x[,"Used EC/Condoms last sex"])
+condom_as_dual <- function(dt = NULL){
 
-  unique(do.call(c,dt_condom_last_sex))
+  if (!is.null(dt)){
+    sapply(dt, function(x) x[, "Received Condoms as a dual Method"]) %>%
+      do.call(c, .) %>%
+      unique(.)
+  }
+
 }
 
-pregancy_results <- function(dt){
-  dt_results <- sapply(dt, function(x) x[,"Pregnant?"])
-  unique(do.call(c, dt_results))
+program_activities <- function(dt = NULL){
+
+  if (!is.null(dt)){
+    sapply(dt, function(x) x[, "Program Activity"]) %>%
+      do.call(c, .) %>%
+      unique(.)
+  }
+
 }
 
-condom_as_dual <- function(dt){
-  dt_condom <- sapply(dt, function(x) x[, "Received Condoms as a dual Method"])
-  unique(do.call(c, dt_condom))
+attendance_frequencies <- function(dt = NULL){
+
+  if (!is.null(dt)){
+    sapply(dt, function(x) x[, "Attendance Frequency"]) %>%
+      do.call(c, .) %>%
+      unique(.)
+  }
+
 }
