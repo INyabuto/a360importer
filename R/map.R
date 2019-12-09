@@ -24,26 +24,65 @@ run_mappings_sp <- function(dt = NULL){
 
 #' Map service provision sheet
 #'
-#' \code{map_sp} maps the service provision sheets with the existing options
+#' \code{map_sp} maps the service provision sheets with the existing options codes
 #' provided in NG RH A360 - Provider Client Records program in DHIS2.
 #'
 #' @param df A data.table or data.frame
-#' @return A mapped data table or data.frame
-map_sp <- function(df = NULL){
+#' @return A mapped data.table or data.frame
+map_sp <- function(df){
 
-  cols <- c("Method Received", "Program Entry Point", "Current Method", "Used EC/Condoms last sex","Pregnant?")
+  #cols <- c("Method Received", "Program Entry Point", "Current Method", "Used EC/Condoms last sex","Pregnant?")
 
-  if (!is.null(df) & cols %in% names(df)){
-    df$`Method Received` <- sapply(df$`Method Received`, function(x) map_method_recieved(x))
-    df$`Program Entry Point` <- sapply(df$`Program Entry Point`, function(x) map_program_entry_point(x))
-    df$`Current Method` <- sapply(df$`Current Method`, function(x) map_current_method(x))
-    df$`Used EC/Condoms last sex` <- sapply(df$`Used EC/Condoms last sex`, function(x) map_used_ec_last_sex(x))
-    df$`Pregnant?` <- sapply(df$`Pregnant?`, function(x) map_preg_results(x))
+  df %>% dplyr::mutate(`Method Received` = map_method_recieved(.$`Method Received`),
+                         `Program Entry Point` = map_program_entry_point(.$`Program Entry Point`),
+                         `Current Method` = map_current_method(.$`Current Method`),
+                         `Used EC/Condoms last sex` = map_used_ec_last_sex(.$`Used EC/Condoms last sex`),
+                         `Pregnant?` =  map_preg_results(.$`Pregnant?`))
+
+}
+
+
+#' Map Attendance sheets
+#'
+#' \code{map_att} maps attendance sheets with the existing options codes in
+#'NG RH A360 -Provider Client Records program in DHIS2.
+#'
+#'@param df A data.table or data.frame
+#'@return A mapped data.table or data.frame
+map_att <- function(dt = NULL){
+  if (!is.null(dt)){
+
+    options <- de_uid("Program type (9ja/MMA/Walk-in)") %>%
+      de_optionset(.) %>%
+      .$options
+
+    dt %>% mutate(`Program Activity` = map_program_activity(.$`Program Activity`))
+
   }
 
-  if (!is.null(df) & !cols %in% names(df)){
-    stop(sprintf("Missing columns dectected!\n columns [%s]", cat(!cols %in% names(df))),
-         call. = FALSE)
+}
+
+
+#'Map Program Activity
+#'
+#'\code{map_program_entry_point} maps program activities with the option codes provided in
+#'NG RH A360 - Provider Client Records program in DHIS2.
+#'
+#'@param x A vector of character or string
+#'@return Existing option codes in DHIS2
+map_program_activity <- function(x = NULL){
+  if (is.null(x)){
+    stop("A vector of character or string must be specified in Program Activity")
+  }
+
+  if (!is.null(x)){
+    options <- de_uid("Program type (9ja/MMA/Walk-in)") %>%
+      de_optionset(.) %>%
+      .$options
+
+    plyr::mapvalues(x,
+                    from = options$name,
+                    to = options$code, warn_missing = F)
   }
 }
 
@@ -58,13 +97,13 @@ map_sp <- function(df = NULL){
 #'@return Existing option codes in DHIS2
 map_method_recieved <- function(x = NULL){
   if (is.null(x)){
-    stop("A vector of character or string must be specified", call. = FALSE)
+    stop("A vector of character or string must be specified in Method Recieved")
   }
 
-  if (!is.null(x) & x != ""){
+  if (!is.null(x)){
     options <- de_optionset(de_uid("Method taken up (old program)"))$options
     plyr::mapvalues(x,
-                    from = option$name,
+                    from = options$name,
                     to = options$code, warn_missing = F)
   }
 }
@@ -78,10 +117,10 @@ map_method_recieved <- function(x = NULL){
 #'@return Existing option codes in DHIS2
 map_program_entry_point <- function(x = NULL){
   if (is.null(x)){
-    stop("A vector of character or string must be specified", call. = FALSE)
+    stop("A vector of character or string must be specified in Program Entry Point")
   }
 
-  if (!is.null(x) & x != ""){
+  if (!is.null(x)){
     options <- de_optionset(de_uid("Program attended by the girl"))$options
     plyr::mapvalues(x,
                     from = options$name,
@@ -99,10 +138,10 @@ map_program_entry_point <- function(x = NULL){
 #'@return Existing option codes in DHIS2
 map_current_method <- function(x = NULL){
   if (is.null(x)){
-    stop("A vector of character or string must be specified", call. = FALSE)
+    stop("A vector of character or string must be specified in Current Method")
   }
 
-  if (!is.null(x) & x != ""){
+  if (!is.null(x)){
     options <- de_optionset(de_uid("Current method"))$options
     plyr::mapvalues(x,
                     from = options$name,
@@ -119,10 +158,10 @@ map_current_method <- function(x = NULL){
 #' @return Existing option codes in DHIS2
 map_used_ec_last_sex <- function(x = NULL){
   if (is.null(x)){
-    stop("A vector of character or string must be specified", call. = FALSE)
+    stop("A vector of character or string must be specified in Used EC/Condom last sex")
   }
 
-  if (!is.null(x) & x != ""){
+  if (!is.null(x)){
     options <- de_optionset(de_uid("EC or condoms used at last sex - Old Program"))$options
     plyr::mapvalues(x,
                     from = options$name,
@@ -140,10 +179,10 @@ map_used_ec_last_sex <- function(x = NULL){
 map_preg_results <- function(x = NULL){
 
   if (is.null(x)){
-    stop("A vector of character or string must be specified", call. = FALSE)
+    stop("A vector of character or string must be specified in Pregnant?")
   }
 
-  if (!is.null(x) & x != ""){
+  if (!is.null(x)){
     options <- de_optionset(de_uid("Pregnancy status"))$options
     plyr::mapvalues(x,
                     from = options$name,
@@ -152,19 +191,5 @@ map_preg_results <- function(x = NULL){
 
 }
 
-#' #' Map condom as dual method
-#' #'
-#' #' \code{map_condom_as_dual} maps condom as a dual option with the DHIS2
-#' #' NG RH A360 - Providr Client Record program.
-#' #'
-#' #' @param x A vector of characteer or string
-#' #' @return Existing codes in DHIS2
-#' map_condom_as_dual <- function(x = NULL){
-#'   if (is.null(x)){
-#'     stop("A vector of character or string must be specified", call. = FALSE)
-#'   }
-#'
-#'   if (!is.null(x) & x != ""){
-#'
-#'   }
-#' }
+
+
