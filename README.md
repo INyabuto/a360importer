@@ -1,4 +1,4 @@
-# a360importer <img src="inst/icon/a360importer.png" height="139" align = "right"/>
+# a360importer <img src="man/figures/a360importer.png" height="139" align = "right"/>
 <!-- badges: start -->
 [![Lifecycle: experimental](https://img.shields.io/badge/lifecycle-experimental-orange.svg)](https://www.tidyverse.org/lifecycle/#experimental)
 <!-- badges: end -->
