@@ -34,6 +34,18 @@ validate_sp <- function(df){
 }
 
 
+validate_att2 <- function(df){
+
+  df$`Program Activity` <- sapply(df$`Program Activity`, validate_program_activity)
+  df$`Attendance Frequency` <- sapply(df$`Attendance Frequency`, validate_attendance_freq)
+  df
+}
+
+validate_att <- function(df){
+
+  df$`Program Activity` <- sapply(df$`Program Activity`, validate_program_activity)
+  df
+}
 
 #' Validate method recieved
 #'
@@ -62,6 +74,7 @@ validate_method_recieved <- function(x = NULL){
            "3d: Injection - Sayana Press" = "Injectable: Sayana Press",
            "3d: Injection - Sayana press" = "Injectable: Sayana Press",
            "4a: Pills - Microgynon" = "Pills - Microgynon",
+           "4A: Pills - Microgynon" = "Pills - Microgynon",
            "4b: Pills - Combination 3" = "Pills - Combination3",
            "4c: Pills - Exluton" = "Pills - Excluton",
            "6a: Condom - Male" = "Condoms - Male",
@@ -96,6 +109,34 @@ validate_attendance_freq <- function(x = NULL){
 
 }
 
+#' Validate Program Activity
+#'
+#' \code{validate_program_activity} validates the different program activities provided in the attendance sheets, including
+#' MMA attendance against those listed in NG RG A360 - 9ja & MMA program.
+#'
+#' @param x A vector of character or string
+#' @return AN existing program activity in DHIS2
+validate_program_activity <- function(x = NULL){
+
+  #options <- de_optionset(de_uid("Program type (9ja/MMA/Walk-in)"))$options
+
+  if (!is.null(x) & x != ""){
+    switch(str_trim(x),
+           "LLH Class (9JA Girls)" = "LLH Class (9JA Girls)",
+           "LLH Reach Out (9JA Girls)" = "LLH Reach Out (9JA Girls)",
+           "Walk-in 9JA Girls Hub" = "Walk-in 9JA Girls Hub",
+           "Walk-in 9JA Girls Spoke" = "Walk-in 9JA Girls Spoke",
+           "Walk-in MMA Hub" = "Walk-in MMA Hub",
+           "LFH Reach Out (MMA)" = "LFH Reach Out (MMA)",
+           "Walk-in MMA Spoke" = "Walk-in MMA Spoke",
+           "LFH Class (MMA)" = "LFH Class (MMA)",
+           "Reachout" = "LLH Reach Out (9JA Girls)",
+           stop(sprintf("Unknown input [%s] in column: Program Activity", x), call. = F)
+           )
+  }
+}
+
+
 #' Validate Program Entry Point
 #'
 #' \code{validate_program_entry_point} validates the different program entry points provided in the service provision sheets
@@ -109,7 +150,7 @@ validate_program_entry_point <- function(x = NULL){
   # uid <- de_uid("Program attended by the girl")
   # options <- de_optionset(uid)$options
 
-  if (!is.null(x) & x != ""){
+  if (!is.null(x) && x != ""){
 
     switch(str_trim(x),
            "Walk-in 9JA Girls Hub" = "Walk-in 9JA Girls Hub",
@@ -120,6 +161,7 @@ validate_program_entry_point <- function(x = NULL){
            "LFH Class (MMA)" = "LFH Class (MMA)",
            "LFH Reach Out (MMA)" = "LFH Reach Out (MMA)",
            "Walk-in MMA Spoke" = "Walk-in MMA Spoke",
+           "Reachout" = "LLH Reach Out (9JA Girls)",
            stop(sprintf("Unknown input [%s] in column: Program Entry Point", x), call. = FALSE))
   }
 
@@ -140,13 +182,18 @@ validate_current_method <- function(x = NULL){
   # uid <- de_uid("Current method")
   # options <- de_optionset(uid)$options
 
-  if (!is.null(x) & x != ""){
+  if (!is.null(x) && x != ""){
     switch(str_trim(x),
            "0: No Method" = "None",
            "1: IUCD" = "IUCD",
            "2: Implant" = "Implant",
+           "2a: Implant - Jadelle" = "Implant",
            "3: Injection" = "Injectable",
+           "3b: Injection - Noristerat" = "Injectable",
+           "3d: Injection - Synapress" = "Injectable",
            "4: Pills" = "Pills",
+           "4a: Pills - Microgynon" = "Pills",
+           "4c: Pills - Escluston" = "Pills",
            "5: Condoms" = "Condom",
            "1: IUD" = "IUCD",
            "3d: Injection - Sayana Press" = "Injectable",
@@ -169,7 +216,7 @@ validate_ec_last_sex <- function(x = NULL){
   #uid <- de_uid("EC or condoms used at last sex - Old Program")
   #options <- de_optionset(uid)$options
 
-  if (!is.null(x) & x != ""){
+  if (!is.null(x) && x != ""){
     switch(str_trim(x),
            "Neither" = "Neither",
            "Condom" = "Condoms",
@@ -192,7 +239,7 @@ validate_preg_results <- function(x = NULL){
   # uid <- de_uid("Pregnancy status")
   # options <- de_optionset(uid)$options
 
-  if (!is.null(x) & x != ""){
+  if (!is.null(x) && x != ""){
     switch(str_trim(x),
            "Not Pregnant" = "Not pregnant",
            "Pregnant" = "Pregnant",
@@ -203,17 +250,28 @@ validate_preg_results <- function(x = NULL){
 
 #' Validate condom as dual method
 #'
-#' \code{validate_condom_as_dual}  Validates the different options listed in the service provision sheets
+#' \code{validate_condom_as_dual} Validates the different options listed in the service provision sheets
 #' against the options in NG RH A360 - Provider Client Records program in DHIS2.
 #'
 #' @param x A vector of character string
 #' @return An existing option in DHIS2
 validate_condom_as_dual <- function(x = NULL){
 
-  if (!is.null(x) & x != ""){
+  if (!is.null(x) && x != ""){
     switch(str_trim(x),
            "No" = "false",
            "Yes" = "true",
            stop(sprintf("Unknown input [%s] in column: Received Condoms as a dual Method", x), call. = FALSE))
   }
 }
+
+
+#' Validate mapped ous
+#'
+#' @param dt a list of data.tables or data.frames
+#' @return Invalid list of dfs
+invalid_ous <- function(dt){
+  dt %>% filter(nchar(.$Facility) != 11)
+}
+
+
