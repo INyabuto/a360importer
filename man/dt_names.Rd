@@ -4,7 +4,7 @@
 \alias{dt_names}
 \title{Get data frame names}
 \usage{
-dt_names(dt)
+dt_names(dt = NULL)
 }
 \arguments{
 \item{dt}{A list of data.table or data.frames}

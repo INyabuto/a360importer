@@ -13,6 +13,6 @@ validate_condom_as_dual(x = NULL)
 An existing option in DHIS2
 }
 \description{
-\code{validate_condom_as_dual}  Validates the different options listed in the service provision sheets
+\code{validate_condom_as_dual} Validates the different options listed in the service provision sheets
 against the options in NG RH A360 - Provider Client Records program in DHIS2.
 }

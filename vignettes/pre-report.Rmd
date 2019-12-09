@@ -18,4 +18,12 @@ knitr::opts_chunk$set(
 #library(a360ngimport)
 ```
 
-# Test me
+# Summary
+
+<!-- ## files by rows -->
+<!-- Attendance sheets:  Apr - May 2019 -->
+<!-- ```{r, include=FALSE} -->
+<!-- library(kableExtra) -->
+<!-- dt <- summarize_files(d_att) -->
+<!-- kable(summarize_files(d_att)) -->
+<!-- ``` -->

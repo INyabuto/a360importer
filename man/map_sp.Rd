@@ -4,15 +4,15 @@
 \alias{map_sp}
 \title{Map service provision sheet}
 \usage{
-map_sp(df = NULL)
+map_sp(df)
 }
 \arguments{
 \item{df}{A data.table or data.frame}
 }
 \value{
-A mapped data table or data.frame
+A mapped data.table or data.frame
 }
 \description{
-\code{map_sp} maps the service provision sheets with the existing options
+\code{map_sp} maps the service provision sheets with the existing options codes
 provided in NG RH A360 - Provider Client Records program in DHIS2.
 }
