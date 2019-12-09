@@ -24,6 +24,8 @@ remove_nas <- function(dt){
 
   dt[is.na(dt)] <- ""
 
+  dt
+
 }
 
 
