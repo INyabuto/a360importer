@@ -2,9 +2,13 @@
 #'
 
 # baseurl <- "https://data.psi-mis.org/"
+# baseurl2 <- "https://staging.psi-mis.org/"
 # base <- substr(baseurl,9,24)
 #
+# base2 <- substr(baseurl2,9,27)
+#
 # pwd <- keyringr::decrypt_kc_pw(base, type = "internet")
+# #pwd2 <- keyringr::decrypt_kc_pw(base2, type = "internet")
 # usr <- "inyambuka"
 #
 # loginDHIS2(baseurl,usr,pwd)
@@ -28,7 +32,7 @@
 #' @return A list of transformed sheets.
 transform_sheets <- function(dt){
   dt <- dt %>%
-    dplyr::select(-c("State","Region","LGA","Ward","Type of Facility"))
+    dplyr::select(-c("State","Region","LGA","Ward","Type of Facility","warn_missing"))
 
   # remap the col names
   names(dt) <- plyr::mapvalues(names(dt),
