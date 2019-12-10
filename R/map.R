@@ -62,6 +62,41 @@ map_att <- function(dt = NULL){
 
 }
 
+map_att2 <- function(dt){
+
+  if (!is.null(dt)){
+
+    options <- de_uid("Program type (9ja/MMA/Walk-in)") %>%
+      de_optionset(.) %>%
+      .$options
+
+    options2 <- de_uid("Program type (9ja/MMA/Walk-in)") %>%
+      de_optionset(.) %>%
+      .$options
+
+    dt %>% mutate(`Program Activity` = map_program_activity(.$`Program Activity`),
+                  `Attendance Frequency` = map_attendance_freq(.$`Attendance Frequency`))
+
+  }
+}
+
+map_attendance_freq <- function(x){
+  if (is.null(x)){
+    stop("A vector of character or string must be specified in Program Activity", call. = F)
+  }
+
+  if (!is.null(x)){
+    options <- de_uid("MMA Session") %>%
+      de_optionset(.) %>%
+      .$options
+
+    plyr::mapvalues(x,
+                    from = options$name,
+                    to = options$code, warn_missing = F)
+  }
+
+}
+
 
 #'Map Program Activity
 #'
@@ -72,7 +107,7 @@ map_att <- function(dt = NULL){
 #'@return Existing option codes in DHIS2
 map_program_activity <- function(x = NULL){
   if (is.null(x)){
-    stop("A vector of character or string must be specified in Program Activity")
+    stop("A vector of character or string must be specified in Program Activity", call. = F)
   }
 
   if (!is.null(x)){
