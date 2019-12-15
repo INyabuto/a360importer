@@ -1,16 +1,14 @@
-#'
-#'
 #'Load A360 NG legacy files into R
 #'
 #'\code{load_files} loads A360 legacy files in the specified directory into R
 #'
-#'@param path System path to the directory with data
-#'@return a list of data frames
+#'@param path System path to the directory with data.
+#'@return A list of data frames
 #'@examples
 #'\dontrun{
 #'load_files(file.path(Sys.getenv("HOME"),"data")
 #'}
-load_files <- function(path = NULL){
+load_files <- function(path){
 
   if (!is.null(path)){
 
@@ -44,7 +42,12 @@ load_files <- function(path = NULL){
 
 #'Load A360 NG legacy files into R
 #'
-#'\code{load_files} loads A360 legacy files in the specified directory into R
+#'\code{load_files} loads A360 legacy files in the specified directory into R.
+#'
+#'#'@seealso
+#'* [load_files] Loads all the csv files in the specified directory.
+#'* [load_files_att2] Loads all the MMA attendance sheets in the specified directory.
+#'* [load_att] Loads all the Attendance sheets in the specified directory.
 #'
 #'@param path System path to the directory with data
 #'@return a list of data frames
@@ -52,7 +55,7 @@ load_files <- function(path = NULL){
 #'\dontrun{
 #'load_files(file.path(Sys.getenv("HOME"),"data")
 #'}
-load_files_sp <- function(path = NULL){
+load_files_sp <- function(path){
 
   if (!is.null(path)){
 
@@ -87,14 +90,18 @@ load_files_sp <- function(path = NULL){
 #'Load A360 NG legacy files into R
 #'
 #'\code{load_files} loads A360 legacy files in the specified directory into R
+#'@seealso
+#'* [load_files] Loads all the csv files in the specified directory.
+#'* [load_files_att2] Loads all the MMA attendance sheets in the specified directory.
+#'* [load_sp] Loads all the service provision sheets in the specified directory.
 #'
-#'@param path System path to the directory with data
-#'@return a list of data frames
+#'@param path System path to the directory with data.
+#'@return A list of data frames
 #'@examples
 #'\dontrun{
 #'load_files(file.path(Sys.getenv("HOME"),"data")
 #'}
-load_files_att <- function(path = NULL){
+load_files_att <- function(path){
 
   if (!is.null(path)){
 
@@ -128,7 +135,12 @@ load_files_att <- function(path = NULL){
 
 #'Load A360 NG legacy files into R
 #'
-#'\code{load_files} loads A360 legacy files in the specified directory into R
+#'\code{load_files} loads A360 legacy files in the specified directory into R.
+#'
+#'#'@seealso
+#'* [load_files] Loads all the csv files in the specified directory.
+#'* [load_files_att] Loads all the Attendance sheets in the specified directory.
+#'* [load_sp] Loads all the service provision sheets in the specified directory.
 #'
 #'@param path System path to the directory with data
 #'@return a list of data frames
