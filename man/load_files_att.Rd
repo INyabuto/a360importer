@@ -4,13 +4,13 @@
 \alias{load_files_att}
 \title{Load A360 NG legacy files into R}
 \usage{
-load_files_att(path = NULL)
+load_files_att(path)
 }
 \arguments{
-\item{path}{System path to the directory with data}
+\item{path}{System path to the directory with data.}
 }
 \value{
-a list of data frames
+A list of data frames
 }
 \description{
 \code{load_files} loads A360 legacy files in the specified directory into R
@@ -19,4 +19,9 @@ a list of data frames
 \dontrun{
 load_files(file.path(Sys.getenv("HOME"),"data")
 }
+}
+\seealso{
+* [load_files] Loads all the csv files in the specified directory.
+* [load_files_att2] Loads all the MMA attendance sheets in the specified directory.
+* [load_sp] Loads all the service provision sheets in the specified directory.
 }

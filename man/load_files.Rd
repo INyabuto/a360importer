@@ -4,13 +4,13 @@
 \alias{load_files}
 \title{Load A360 NG legacy files into R}
 \usage{
-load_files(path = NULL)
+load_files(path)
 }
 \arguments{
-\item{path}{System path to the directory with data}
+\item{path}{System path to the directory with data.}
 }
 \value{
-a list of data frames
+A list of data frames
 }
 \description{
 \code{load_files} loads A360 legacy files in the specified directory into R

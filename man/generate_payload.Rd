@@ -8,11 +8,31 @@ generate_payload(dt, program_id = "program_id", status = "COMPLETED",
   storedBy = "old / archive import")
 }
 \arguments{
-\item{dt}{A list of tranformed df}
+\item{dt}{A mapped data.table or data frame to transform.}
+
+\item{program_id}{The ID of the event program.}
+
+\item{status}{The status of events. By default, events are marked as completed.}
+
+\item{storedBy}{A reference of the imports. If its an historical upload it better to lebale them as "old / archive import".}
 }
 \value{
-list payload
+A transformed data.frame.
 }
 \description{
-Generate payload
+This function turns a mapped data frame or data.table to a payload ready for upload.
+}
+\details{
+\code{generate_payload} is typically used in a map or apply function but you can also directly supply a mapped data.table or
+data frame.
+}
+\examples{
+\dontrun{
+# transform a single dt to a payload
+generate_payload(dt, program_id = "idgtsybkji2")
+
+# transform a list of data frames to a payload
+purrr::map(dt, generate_payload)
+
+}
 }

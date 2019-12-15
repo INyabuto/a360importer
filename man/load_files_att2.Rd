@@ -13,7 +13,13 @@ load_files_att2(path = NULL)
 a list of data frames
 }
 \description{
-\code{load_files} loads A360 legacy files in the specified directory into R
+\code{load_files} loads A360 legacy files in the specified directory into R.
+}
+\details{
+#'@seealso
+* [load_files] Loads all the csv files in the specified directory.
+* [load_files_att] Loads all the Attendance sheets in the specified directory.
+* [load_sp] Loads all the service provision sheets in the specified directory.
 }
 \examples{
 \dontrun{

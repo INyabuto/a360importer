@@ -21,9 +21,6 @@ FALSE, to save the changes on the server.}
 }
 \value{
 A response
-\dontrun{
-upload(x)
-}
 }
 \description{
 This function uploads events to PSI production server, `data.psi-mis.org`.
@@ -31,4 +28,22 @@ This function uploads events to PSI production server, `data.psi-mis.org`.
 \details{
 \code{upload} function uploads individual events to two PSI servers; `data.psi-mis.org`
 and `clone.psi-mis.org`. By default it sends the events to the test server available at `clone.psi-mis.org`.
+}
+\examples{
+\dontrun{
+# upload to test erver
+upload(x)
+
+# upload to production
+upload(x, live = T)
+
+# upload from a list
+  upload_sheets <- function(x, live = F) {
+x \%>\%
+ map(., function(y) upload(y, live))
+}
+
+upload_sheets(x)
+
+}
 }
