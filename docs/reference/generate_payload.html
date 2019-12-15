@@ -34,7 +34,7 @@
 
 <meta property="og:title" content="Generate payload — generate_payload" />
 
-<meta property="og:description" content="Generate payload" />
+<meta property="og:description" content="This function turns a mapped data frame or data.table to a payload ready for upload." />
 <meta name="twitter:card" content="summary" />
 
 
@@ -122,7 +122,7 @@
 
     <div class="ref-description">
     
-    <p>Generate payload</p>
+    <p>This function turns a mapped data frame or data.table to a payload ready for upload.</p>
     
     </div>
 
@@ -134,15 +134,41 @@
     <colgroup><col class="name" /><col class="desc" /></colgroup>
     <tr>
       <th>dt</th>
-      <td><p>A list of tranformed df</p></td>
+      <td><p>A mapped data.table or data frame to transform.</p></td>
+    </tr>
+    <tr>
+      <th>program_id</th>
+      <td><p>The ID of the event program.</p></td>
+    </tr>
+    <tr>
+      <th>status</th>
+      <td><p>The status of events. By default, events are marked as completed.</p></td>
+    </tr>
+    <tr>
+      <th>storedBy</th>
+      <td><p>A reference of the imports. If its an historical upload it better to lebale them as "old / archive import".</p></td>
     </tr>
     </table>
     
     <h2 class="hasAnchor" id="value"><a class="anchor" href="#value"></a>Value</h2>
 
-    <p>list payload</p>
+    <p>A transformed data.frame.</p>
+    
+    <h2 class="hasAnchor" id="details"><a class="anchor" href="#details"></a>Details</h2>
+
+    <p><code>generate_payload</code> is typically used in a map or apply function but you can also directly supply a mapped data.table or
+data frame.</p>
     
 
+    <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
+    <pre class="examples"><div class='input'><span class='kw'>if</span> (<span class='fl'>FALSE</span>) {
+<span class='co'># transform a single dt to a payload</span>
+<span class='fu'>generate_payload</span>(<span class='no'>dt</span>, <span class='kw'>program_id</span> <span class='kw'>=</span> <span class='st'>"idgtsybkji2"</span>)
+
+<span class='co'># transform a list of data frames to a payload</span>
+<span class='kw pkg'>purrr</span><span class='kw ns'>::</span><span class='fu'><a href='https://purrr.tidyverse.org/reference/map.html'>map</a></span>(<span class='no'>dt</span>, <span class='no'>generate_payload</span>)
+
+}</div></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">
     <h2>Contents</h2>
@@ -150,7 +176,11 @@
       <li><a href="#arguments">Arguments</a></li>
       
       <li><a href="#value">Value</a></li>
-          </ul>
+
+      <li><a href="#details">Details</a></li>
+      
+      <li><a href="#examples">Examples</a></li>
+    </ul>
 
   </div>
 </div>
