@@ -1,3 +1,66 @@
+
+#' @importFrom attempt stop_if_not
+#' @importFrom curl has_internet
+check_internet <- function(){
+  stop_if_not(.x = has_internet(),
+              msg = "Please check your internet connection")
+
+}
+
+#' @importFrom httr http_error status_code
+check_status <- function(resp, parsed){
+  if (http_error(resp)) {
+    stop(
+      sprintf(
+        "PSI - MIS API request failed [%s]\n%s\n<%s>",
+        status_code(resp),
+        parsed$message,
+        "https://docs.dhis2.org/master/en/developer/html/dhis2_developer_manual.html"
+      ),
+      call. = FALSE
+    )
+  }
+
+}
+
+#' @importFrom httr http_type
+check_content <- function(resp){
+  if (http_type(resp) != "application/json"){
+    stop("PSI - MIS API did not return json", call. = FALSE)
+  }
+}
+
+api_version <- function(version = NULL){
+
+  if (!is.null(version)){
+    version <- version
+  }
+
+  if (is.null(version)){
+    version <- 29
+  }
+
+  version
+}
+
+#' @importFrom httr user_agent
+set_agent <- function(agent = NULL){
+  if (is.null(agent)){
+    agent <- "https://github.com/INyabuto/a360importer"
+    user_agent(agent)
+  }
+
+  if (!is.null(agent)){
+    user_agent(agent)
+  }
+
+}
+
+
+
+
+
+
 #' Remove empty rows
 #'
 #' \code{remove_empty_rows} finds rows with entire NAs and and wipes off.

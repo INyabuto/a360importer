@@ -1,14 +1,15 @@
 #' Transform elements
 #'
-
+#
 # baseurl <- "https://data.psi-mis.org/"
-# baseurl2 <- "https://staging.psi-mis.org/"
+# baseurl2 <- "https://sandbox.psi-mis.org/"
 # base <- substr(baseurl,9,24)
 #
 # base2 <- substr(baseurl2,9,27)
 #
 # pwd <- keyringr::decrypt_kc_pw(base, type = "internet")
 # #pwd2 <- keyringr::decrypt_kc_pw(base2, type = "internet")
+# pwd2 <- 'Solar\"123'
 # usr <- "inyambuka"
 #
 # loginDHIS2(baseurl,usr,pwd)
@@ -33,6 +34,21 @@
 transform_sheets <- function(dt){
   dt <- dt %>%
     dplyr::select(-c("State","Region","LGA","Ward","Type of Facility","warn_missing"))
+
+  # remap the col names
+  names(dt) <- plyr::mapvalues(names(dt),
+                               from = meta$dt_cols,
+                               to = meta$id,
+                               warn_missing = F)
+  dt
+  #
+
+}
+
+# Transform Att2 sheets
+transform_sheets2 <- function(dt){
+  dt <- dt %>%
+    dplyr::select(-c("State","Region","LGA","Ward","warn_missing"))
 
   # remap the col names
   names(dt) <- plyr::mapvalues(names(dt),
