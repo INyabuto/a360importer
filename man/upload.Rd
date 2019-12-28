@@ -2,10 +2,10 @@
 % Please edit documentation in R/push.R
 \name{upload}
 \alias{upload}
-\title{Upload payload}
+\title{Upload a payload}
 \usage{
 upload(
-  x,
+  df,
   live = FALSE,
   importStrategy = "CREATE",
   dryRun = F,
@@ -13,22 +13,22 @@ upload(
 )
 }
 \arguments{
-\item{x}{A data.frame object, the event payload.}
+\item{df}{A data.frame object, the event payload.}
 
-\item{importStrategy}{A string specifying the action to apply on the import.It indicates whether to Save objects of all,
+\item{importStrategy}{A string specifying the action to apply on the import.It provides options to Save objects of all,
 new or update import status on the server. One of 'CREATE', 'UPDATE', 'CREATE_AND_UPDATE' and 'DELETE'.The default one is
 "CREATE".}
 
 \item{dryRun}{A logical input; Save changes on the server or just return the import summary.By default, The default one is
 FALSE, to save the changes on the server.}
 
-\item{skipNotifications}{A logical input; Indicates whether to send notifications for completed events. The default one is FALSE}
+\item{skipNotifications}{A logical input; provides an option to send notifications for completed events. The default one is FALSE}
 }
 \value{
-A response
+An S3 type object with content, path and the response.
 }
 \description{
-This function uploads events to PSI production server, `data.psi-mis.org`.
+This function uploads events to PSI data server, `data.psi-mis.org`.
 }
 \details{
 \code{upload} function uploads individual events to two PSI servers; `data.psi-mis.org`
