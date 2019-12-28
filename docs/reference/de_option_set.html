@@ -6,7 +6,7 @@
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<title>Upload a payload — upload • a360importer</title>
+<title>Data element option set — de_option_set • a360importer</title>
 
 
 <!-- jquery -->
@@ -35,8 +35,8 @@
 
 
 
-<meta property="og:title" content="Upload a payload — upload" />
-<meta property="og:description" content="This function uploads events to PSI data server, `data.psi-mis.org`." />
+<meta property="og:title" content="Data element option set — de_option_set" />
+<meta property="og:description" content="Retrieve an option set of a data element." />
 <meta name="twitter:card" content="summary" />
 
 
@@ -117,71 +117,38 @@
 <div class="row">
   <div class="col-md-9 contents">
     <div class="page-header">
-    <h1>Upload a payload</h1>
-    <small class="dont-index">Source: <a href='https://github.com/INyabuto/a360importer/blob/master/R/push.R'><code>R/push.R</code></a></small>
-    <div class="hidden name"><code>upload.Rd</code></div>
+    <h1>Data element option set</h1>
+    <small class="dont-index">Source: <a href='https://github.com/INyabuto/a360importer/blob/master/R/option_set.R'><code>R/option_set.R</code></a></small>
+    <div class="hidden name"><code>de_option_set.Rd</code></div>
     </div>
 
     <div class="ref-description">
-    <p>This function uploads events to PSI data server, `data.psi-mis.org`.</p>
+    <p>Retrieve an option set of a data element.</p>
     </div>
 
-    <pre class="usage"><span class='fu'>upload</span>(
-  <span class='no'>df</span>,
-  <span class='kw'>live</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>,
-  <span class='kw'>importStrategy</span> <span class='kw'>=</span> <span class='st'>"CREATE"</span>,
-  <span class='kw'>dryRun</span> <span class='kw'>=</span> <span class='no'>F</span>,
-  <span class='kw'>skipNotifications</span> <span class='kw'>=</span> <span class='no'>F</span>
-)</pre>
+    <pre class="usage"><span class='fu'>de_option_set</span>(<span class='kw'>uid</span> <span class='kw'>=</span> <span class='kw'>NULL</span>)</pre>
 
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">
     <colgroup><col class="name" /><col class="desc" /></colgroup>
     <tr>
-      <th>df</th>
-      <td><p>A data.frame object, the event payload.</p></td>
-    </tr>
-    <tr>
-      <th>importStrategy</th>
-      <td><p>A string specifying the action to apply on the import.It provides options to Save objects of all,
-new or update import status on the server. One of 'CREATE', 'UPDATE', 'CREATE_AND_UPDATE' and 'DELETE'.The default one is
-"CREATE".</p></td>
-    </tr>
-    <tr>
-      <th>dryRun</th>
-      <td><p>A logical input; Save changes on the server or just return the import summary.By default, The default one is
-FALSE, to save the changes on the server.</p></td>
-    </tr>
-    <tr>
-      <th>skipNotifications</th>
-      <td><p>A logical input; provides an option to send notifications for completed events. The default one is FALSE</p></td>
+      <th>uid</th>
+      <td><p>A character string, the data element uid.</p></td>
     </tr>
     </table>
 
     <h2 class="hasAnchor" id="value"><a class="anchor" href="#value"></a>Value</h2>
 
-    <p>An S3 type object with content, path and the response.</p>
+    <p>an S3 type object with an optsion set id, options, path and the response.</p>
     <h2 class="hasAnchor" id="details"><a class="anchor" href="#details"></a>Details</h2>
 
-    <p><code>upload</code> function uploads individual events to two PSI servers; `data.psi-mis.org`
-and `clone.psi-mis.org`. By default it sends the events to the test server available at `clone.psi-mis.org`.</p>
+    <p><code>de_option_set</code> retrieves an option set of a data element. It checks whether the data element has
+    an option set and extracts its details including the options. <code>de_option_set</code> returns the option set id, options,
+    path and the response.</p>
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
     <pre class="examples"><div class='input'><span class='kw'>if</span> (<span class='fl'>FALSE</span>) {
-<span class='co'># upload to test erver</span>
-<span class='fu'>upload</span>(<span class='no'>x</span>)
-
-<span class='co'># upload to production</span>
-<span class='fu'>upload</span>(<span class='no'>x</span>, <span class='kw'>live</span> <span class='kw'>=</span> <span class='no'>T</span>)
-
-<span class='co'># upload from a list</span>
-  <span class='no'>upload_sheets</span> <span class='kw'>&lt;-</span> <span class='kw'>function</span>(<span class='no'>x</span>, <span class='no'>live</span> <span class='kw'>=</span> <span class='no'>F</span>) {
-<span class='no'>x</span> <span class='kw'>%&gt;%</span>
- <span class='fu'>map</span>(<span class='no'>.</span>, <span class='kw'>function</span>(<span class='no'>y</span>) <span class='fu'>upload</span>(<span class='no'>y</span>, <span class='no'>live</span>))
-}
-
-<span class='fu'>upload_sheets</span>(<span class='no'>x</span>)
-
+<span class='fu'>de_option_set</span>(<span class='kw'>uid</span> <span class='kw'>=</span> <span class='st'>"xywg23thsiw"</span>)
 }</div></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">

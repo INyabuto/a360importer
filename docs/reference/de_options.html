@@ -6,7 +6,7 @@
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<title>GET options in a optionSet — de_options • a360importer</title>
+<title>Retrieve options in an option set — de_options • a360importer</title>
 
 
 <!-- jquery -->
@@ -35,8 +35,8 @@
 
 
 
-<meta property="og:title" content="GET options in a optionSet — de_options" />
-<meta property="og:description" content="GET options in a optionSet" />
+<meta property="og:title" content="Retrieve options in an option set — de_options" />
+<meta property="og:description" content="Retrieve options in an option set" />
 <meta name="twitter:card" content="summary" />
 
 
@@ -117,13 +117,13 @@
 <div class="row">
   <div class="col-md-9 contents">
     <div class="page-header">
-    <h1>GET options in a optionSet</h1>
-    <small class="dont-index">Source: <a href='https://github.com/INyabuto/a360importer/blob/master/R/utils.R'><code>R/utils.R</code></a></small>
+    <h1>Retrieve options in an option set</h1>
+    <small class="dont-index">Source: <a href='https://github.com/INyabuto/a360importer/blob/master/R/option_set.R'><code>R/option_set.R</code></a></small>
     <div class="hidden name"><code>de_options.Rd</code></div>
     </div>
 
     <div class="ref-description">
-    <p>GET options in a optionSet</p>
+    <p>Retrieve options in an option set</p>
     </div>
 
     <pre class="usage"><span class='fu'>de_options</span>(<span class='kw'>uid</span> <span class='kw'>=</span> <span class='kw'>NULL</span>)</pre>
@@ -133,13 +133,17 @@
     <colgroup><col class="name" /><col class="desc" /></colgroup>
     <tr>
       <th>uid</th>
-      <td><p>An optionSet uid</p></td>
+      <td><p>A character string, uid of the option set.</p></td>
     </tr>
     </table>
 
     <h2 class="hasAnchor" id="value"><a class="anchor" href="#value"></a>Value</h2>
 
-    <p>an S3 object with the content, path and the response.</p>
+    <p>an S3 type object with content, path and the response.</p>
+    <h2 class="hasAnchor" id="details"><a class="anchor" href="#details"></a>Details</h2>
+
+    <p><code>de_options</code> is used internally by de_option_set to retreive options of an option set. It selects
+    the name, code and id of options.</p>
 
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">
@@ -147,6 +151,7 @@
     <ul class="nav nav-pills nav-stacked">
       <li><a href="#arguments">Arguments</a></li>
       <li><a href="#value">Value</a></li>
+      <li><a href="#details">Details</a></li>
     </ul>
 
   </div>
