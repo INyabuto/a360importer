@@ -1,6 +1,7 @@
 
 #' @importFrom attempt stop_if_not
 #' @importFrom curl has_internet
+#' @noRd
 check_internet <- function(){
   stop_if_not(.x = has_internet(),
               msg = "Please check your internet connection")
@@ -8,6 +9,7 @@ check_internet <- function(){
 }
 
 #' @importFrom httr http_error status_code
+#' @noRd
 check_status <- function(resp, parsed){
   if (http_error(resp)) {
     stop(
@@ -23,13 +25,39 @@ check_status <- function(resp, parsed){
 
 }
 
+#' @importFrom httr http_error status_code
+#' @noRd
+check_status_on_upload <- function(resp, parsed){
+  if (http_error(resp)){
+    warning(
+      sprintf("PSI - MIS API request failed [%s]\n%s\n<%s>",
+              status_code(resp),
+              error_description(parsed),
+              "https://docs.dhis2.org/master/en/developer/html/dhis2_developer_manual.html"),
+      call. = F
+    )
+
+  }
+}
+
+#' error decription on upload
+error_description <- function(x){
+  x$response$importSummaries$description %>%
+    unique(.) %>%
+    .[!is.na(.)] %>%
+    paste0(., collapse = "")
+}
+
+
 #' @importFrom httr http_type
+#' @noRd
 check_content <- function(resp){
   if (http_type(resp) != "application/json"){
     stop("PSI - MIS API did not return json", call. = FALSE)
   }
 }
 
+#' @noRd
 api_version <- function(version = NULL){
 
   if (!is.null(version)){
@@ -44,6 +72,7 @@ api_version <- function(version = NULL){
 }
 
 #' @importFrom httr user_agent
+#' @noRd
 set_agent <- function(agent = NULL){
   if (is.null(agent)){
     agent <- "https://github.com/INyabuto/a360importer"
@@ -57,16 +86,13 @@ set_agent <- function(agent = NULL){
 }
 
 
-
-
-
-
 #' Remove empty rows
 #'
 #' \code{remove_empty_rows} finds rows with entire NAs and and wipes off.
 #'
 #' @param df A data frame
 #' @return a packed df
+#' @noRd
 remove_empty_rows <- function(dt){
 
   # replace "" with NAs
@@ -83,6 +109,7 @@ remove_empty_rows <- function(dt){
 #'
 #' @param dt a data.table
 #' @return a table without NAs
+#' @noRd
 remove_nas <- function(dt){
 
   dt[is.na(dt)] <- ""
@@ -92,109 +119,9 @@ remove_nas <- function(dt){
 }
 
 
-
-#' GET optionSet details of a data element
-#'
-#' @param uid A dataElement uid
-#' @return an S3 object with the optsionSet id, options, path and the response.
-de_optionset <- function(uid = NULL){
-
-  ua <- user_agent("https://github.com/INyabuto/a360importer")
-
-
-
-  if (!is.null(id)){
-
-    path = paste0("api/dataElements/",uid)
-
-    url <- modify_url("https://data.psi-mis.org", path = path, query = paste0("fields=optionSet[id]"))
-
-    resp <- GET(url, ua)
-
-  }
-
-  if (http_type(resp) != "application/json"){
-    stop("PSI MIS API did not return a json", call. = FALSE)
-  }
-
-  parsed <- fromJSON(content(resp,"text"))
-
-  # Turn HTTP errors into R
-
-  if (http_error(resp)){
-    stop(sprintf("PSI - MIS API request failed with status [%s]\n%s\n<%s>",
-                 status_code(resp),
-                 parsed$message,
-                 "https://docs.dhis2.org/master/en/developer/html/dhis2_developer_manual.html"),
-         call. = FALSE)
-  }
-
-
-  structure(
-    list(optionSet_id = parsed$optionSet$id,
-         options = de_options(parsed$optionSet$id)$content$options,
-         path = path,
-         response = resp),
-    class = "de_optionset_id"
-  )
-
-}
-
-
-print.de_optionset <- function(x,...){
-  cat("[PSI - MIS ", x$path, "]\n", sep = "")
-  str(x)
-  invisible(x)
-}
-
-
-
-#' GET options in a optionSet
-#'
-#' @param uid An optionSet uid
-#' @return an S3 object with the content, path and the response.
-de_options <- function(uid = NULL){
-
-  ua <- user_agent("https://github.com/INyabuto/a360importer")
-
-  if (!is.null(uid)){
-
-    path = paste0("api/optionSets/",uid)
-
-    url <- modify_url("https://data.psi-mis.org", path = path, query = paste0("fields=options[id,code,name]"))
-
-    resp <- GET(url, ua)
-
-  }
-
-  if (http_type(resp) != "application/json"){
-    stop("PSI MIS API did not return a json", call. = FALSE)
-  }
-
-  parsed <- fromJSON(content(resp,"text"))
-
-
-  # Turn HTTP errors into R
-
-  if (http_error(resp)){
-    stop(sprintf("PSI - MIS API request failed with status [%s]\n%s\n<%s>",
-                    status_code(resp),
-                    parsed$message,
-                    "https://docs.dhis2.org/master/en/developer/html/dhis2_developer_manual.html"),
-            call. = FALSE)
-  }
-
-  structure(
-    list(content = parsed,
-         path = path,
-         response = resp),
-    class = "de_options"
-    )
-
-}
-
 #' Retrive Data element uid
-#'@param x A vector of character string
+#' @param x A vector of character string
+#' @noRd
 de_uid <- function(x){
 
   index <- str_which(meta$dhis2, coll(str_trim(x), ignore_case = T))
@@ -203,7 +130,8 @@ de_uid <- function(x){
 }
 
 
-# summary report
+#' summary report
+#' @noRd
 summarize_files <- function(dt){
   dt <- data.frame(file = names(dt),
                 rows = sapply(dt, nrow),

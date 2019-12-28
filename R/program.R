@@ -60,7 +60,7 @@ print.prog_des_9ja <- function(x,...){
 #' @name assign_ous
 #' @title Assign OUS to a program
 #'
-#' @description Updates the organisation units of a program.
+#' @description Update the organisation units of a program.
 #'
 #' @param df A data.frame with organisationUnit ids
 #' @param program_id The id of the Program to update.
@@ -81,7 +81,11 @@ print.prog_des_9ja <- function(x,...){
 #' assign_ous(df, program_id = "BCnz7XE4olS")
 #' assign_ous(df, program_id = "BCnz7XE4olS", live = TRUE)
 #' }
-assign_ous <- function(df, program_id = "program_id", live = F){
+assign_ous <- function(df = NULL, program_id = "program_id", live = F){
+
+  if (is.null(df)){
+    stop("A data.frame object with organisation units must be specified", call. = F)
+  }
 
   path <- paste0("api/",api_version(),"/programs/",program_id)
   path2 <- paste0("api/",api_version(),"metadata")

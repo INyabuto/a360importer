@@ -1,20 +1,27 @@
-#' Upload payload
+#' @name upload
+#' @title Upload a payload
 #'
-#' This function uploads events to PSI production server, `data.psi-mis.org`.
+#' @description This function uploads events to PSI data server, `data.psi-mis.org`.
 #'
+#' @details
 #' \code{upload} function uploads individual events to two PSI servers; `data.psi-mis.org`
 #' and `clone.psi-mis.org`. By default it sends the events to the test server available at `clone.psi-mis.org`.
 #'
-#'@param x A data.frame object, the event payload.
-#'@param importStrategy A string specifying the action to apply on the import.It indicates whether to Save objects of all,
+#'
+#' @param df A data.frame object, the event payload.
+#' @param importStrategy A string specifying the action to apply on the import.It provides options to Save objects of all,
 #' new or update import status on the server. One of 'CREATE', 'UPDATE', 'CREATE_AND_UPDATE' and 'DELETE'.The default one is
 #' "CREATE".
-#'@param dryRun A logical input; Save changes on the server or just return the import summary.By default, The default one is
-#'FALSE, to save the changes on the server.
-#'@param skipNotifications A logical input; Indicates whether to send notifications for completed events. The default one is FALSE
-#'@return A response
-#'@examples
-#'\dontrun{
+#' @param dryRun A logical input; Save changes on the server or just return the import summary.By default, The default one is
+#' FALSE, to save the changes on the server.
+#' @param skipNotifications A logical input; provides an option to send notifications for completed events. The default one is FALSE
+#'
+#' @importFrom httr content modify_url
+#' @importFrom jsonlite fromJSON
+#' @return An S3 type object with content, path and the response.
+#' @export
+#' @examples
+#' \dontrun{
 #'# upload to test erver
 #'upload(x)
 #'
@@ -30,46 +37,38 @@
 #' upload_sheets(x)
 #'
 #'}
-upload <- function(x, live = FALSE,
+upload <- function(df, live = FALSE,
                    importStrategy = "CREATE",
                    dryRun = F,
                    skipNotifications = F){
 
-  path = "api/events"
+  path = paste0("api/",api_version(),"/events")
   query = paste0("importStrategy=",importStrategy)
 
+  ua <- set_agent()
+
   if (live){
-    url <- httr::modify_url("https://data.psi-mis.org", path = path, query = query)
+    url <- modify_url("https://data.psi-mis.org", path = path, query = query)
   }
 
   if (!live){
-    url <- httr::modify_url("https://staging.psi-mis.org", path = path, query = query)
+    url <- modify_url("https://staging.psi-mis.org", path = path, query = query)
   }
 
-  resp <- httr::POST(url,
-                     body = toJSON(list(events = x), auto_unbox = T),
-                     content_type_json())
+  # check for internet
+  check_internet()
 
+  resp <- POST(url,ua,
+               body = toJSON(list(events = df), auto_unbox = T),
+               content_type_json())
 
-  if (http_type(resp) != "application/json"){
-    stop("PSI - MIS API did not return json", call. = F)
-  }
+  # assess the response
+  check_content(resp)
 
   parsed <- fromJSON(content(resp,"text"))
 
-
-  if (http_error(resp)){
-    warning(
-      sprintf("PSI - MIS API request failed [%s]\n%s\n<%s>",
-              status_code(resp),
-              error_description(parsed),
-              "https://docs.dhis2.org/master/en/developer/html/dhis2_developer_manual.html"),
-      call. = F
-    )
-
-  }
-
-  #parsed
+  # check the results
+  check_status_on_upload(resp, parsed)
 
   structure(
     list(content = parsed,
@@ -79,20 +78,14 @@ upload <- function(x, live = FALSE,
 
 }
 
-
+#' print method for class upload
+#' @noRd
 print.upload <- function(x,...){
   cat("[PSI - MIS ", x$message, "]\n", sep = "")
   str(x$content)
   invisible(x)
 }
 
-
-error_description <- function(x){
-  x$response$importSummaries$description %>%
-    unique(.) %>%
-    .[!is.na(.)] %>%
-    paste0(., collapse = "")
-}
 
 
 
