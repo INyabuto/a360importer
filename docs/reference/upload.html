@@ -8,11 +8,13 @@
 
 <title>Upload payload — upload • a360importer</title>
 
+
 <!-- jquery -->
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.min.js" integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8=" crossorigin="anonymous"></script>
 <!-- Bootstrap -->
 
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha256-916EbMg70RQy9LHiGkXzG8hSg9EdNy97GazNG/aiY1w=" crossorigin="anonymous" />
+
 <script src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha256-U5ZEeKfGNOja007MMD3YBI0A3OSZOQbeG6z2f2Y0hu8=" crossorigin="anonymous"></script>
 
 <!-- Font Awesome icons -->
@@ -32,10 +34,11 @@
 
 
 
-<meta property="og:title" content="Upload payload — upload" />
 
+<meta property="og:title" content="Upload payload — upload" />
 <meta property="og:description" content="This function uploads events to PSI production server, `data.psi-mis.org`." />
 <meta name="twitter:card" content="summary" />
+
 
 
 
@@ -94,7 +97,6 @@
   </ul>
 </li>
       </ul>
-      
       <ul class="nav navbar-nav navbar-right">
         <li>
   <a href="https://github.com/INyabuto/a360importer">
@@ -121,14 +123,17 @@
     </div>
 
     <div class="ref-description">
-    
     <p>This function uploads events to PSI production server, `data.psi-mis.org`.</p>
-    
     </div>
 
-    <pre class="usage"><span class='fu'>upload</span>(<span class='no'>x</span>, <span class='kw'>live</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>, <span class='kw'>importStrategy</span> <span class='kw'>=</span> <span class='st'>"CREATE"</span>, <span class='kw'>dryRun</span> <span class='kw'>=</span> <span class='no'>F</span>,
-  <span class='kw'>skipNotifications</span> <span class='kw'>=</span> <span class='no'>F</span>)</pre>
-    
+    <pre class="usage"><span class='fu'>upload</span>(
+  <span class='no'>x</span>,
+  <span class='kw'>live</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>,
+  <span class='kw'>importStrategy</span> <span class='kw'>=</span> <span class='st'>"CREATE"</span>,
+  <span class='kw'>dryRun</span> <span class='kw'>=</span> <span class='no'>F</span>,
+  <span class='kw'>skipNotifications</span> <span class='kw'>=</span> <span class='no'>F</span>
+)</pre>
+
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">
     <colgroup><col class="name" /><col class="desc" /></colgroup>
@@ -152,16 +157,14 @@ FALSE, to save the changes on the server.</p></td>
       <td><p>A logical input; Indicates whether to send notifications for completed events. The default one is FALSE</p></td>
     </tr>
     </table>
-    
+
     <h2 class="hasAnchor" id="value"><a class="anchor" href="#value"></a>Value</h2>
 
     <p>A response</p>
-    
     <h2 class="hasAnchor" id="details"><a class="anchor" href="#details"></a>Details</h2>
 
     <p><code>upload</code> function uploads individual events to two PSI servers; `data.psi-mis.org`
 and `clone.psi-mis.org`. By default it sends the events to the test server available at `clone.psi-mis.org`.</p>
-    
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
     <pre class="examples"><div class='input'><span class='kw'>if</span> (<span class='fl'>FALSE</span>) {
@@ -185,11 +188,8 @@ and `clone.psi-mis.org`. By default it sends the events to the test server avail
     <h2>Contents</h2>
     <ul class="nav nav-pills nav-stacked">
       <li><a href="#arguments">Arguments</a></li>
-      
       <li><a href="#value">Value</a></li>
-
       <li><a href="#details">Details</a></li>
-      
       <li><a href="#examples">Examples</a></li>
     </ul>
 
