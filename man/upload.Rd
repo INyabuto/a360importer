@@ -4,8 +4,13 @@
 \alias{upload}
 \title{Upload payload}
 \usage{
-upload(x, live = FALSE, importStrategy = "CREATE", dryRun = F,
-  skipNotifications = F)
+upload(
+  x,
+  live = FALSE,
+  importStrategy = "CREATE",
+  dryRun = F,
+  skipNotifications = F
+)
 }
 \arguments{
 \item{x}{A data.frame object, the event payload.}

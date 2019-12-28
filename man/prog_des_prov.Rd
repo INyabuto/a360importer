@@ -2,13 +2,23 @@
 % Please edit documentation in R/program.R
 \name{prog_des_prov}
 \alias{prog_des_prov}
-\title{GET NG RH A360 - A3. Provider Client Record program data elements}
+\title{Program data elements (provider)}
 \usage{
 prog_des_prov()
 }
 \value{
-An S3 object
+An S3 object with information about the content, path and the reponse
 }
 \description{
-\code{prog_des_prov} Retrieves all the data elements from NG RH A360 - A3. Provider Client Record program
+Retrieve all the data elements from `NG RH A360 - A3. Provider Client Record` program.
+}
+\details{
+\code{prog_des_prov} retrieves all the NG RH A360 - A3. Provider Client Records data elements from the PSI data server
+    (https://data.psi-mis.org). It selects the data element name and id from the program stage (id = ainkgKtBFFQ)
+     and returns an S3 type object with the content, path, and the response.
+}
+\examples{
+\dontrun{
+prog_des_prov()
+}
 }

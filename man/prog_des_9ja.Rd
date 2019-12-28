@@ -2,13 +2,23 @@
 % Please edit documentation in R/program.R
 \name{prog_des_9ja}
 \alias{prog_des_9ja}
-\title{GET NG RH A360 - A2. 9ja Girls & MMA Events program data elements}
+\title{Program data elements (9ja)}
 \usage{
 prog_des_9ja()
 }
 \value{
-An S3 object
+An S3 object with information about the content, path and the reponse
 }
 \description{
-\code{prog_des_9ja} Retrieves all the data elements from NG RH A360 - A2. 9ja Girls & MMA Events program.
+Retrieve all the data elements from `NG RH A360 - A2. 9ja Girls & MMA Events` program.
+}
+\details{
+\code{prog_des_9ja} retrieves all the 9ja Girls and MMA Events data elements from the PSI data server
+    (https://data.psi-mis.org). It selects the data element name and id from the program stage (id = BCnz7XE4olS)
+     and returns an S3 type object with the content, path, and the response.
+}
+\examples{
+\dontrun{
+prog_des_9ja()
+}
 }

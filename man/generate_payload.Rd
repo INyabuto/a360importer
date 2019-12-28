@@ -4,8 +4,12 @@
 \alias{generate_payload}
 \title{Generate payload}
 \usage{
-generate_payload(dt, program_id = "program_id", status = "COMPLETED",
-  storedBy = "old / archive import")
+generate_payload(
+  dt,
+  program_id = "program_id",
+  status = "COMPLETED",
+  storedBy = "old / archive import"
+)
 }
 \arguments{
 \item{dt}{A mapped data.table or data frame to transform.}
