@@ -21,7 +21,7 @@ It provides key functions for manipulating and uploading A360 historical files e
 devtools::install_github("INyabuto/a360importer")
 
 ```
-
+## Code of Conduct
 Please note that the 'a360importer' project is released with a
 [Contributor Code of Conduct](CODE_OF_CONDUCT.md).
 By contributing to this project, you agree to abide by its terms.
