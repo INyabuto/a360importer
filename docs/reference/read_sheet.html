@@ -6,7 +6,7 @@
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<title>Read multiple data files (CSV) — load_files • a360importer</title>
+<title>Read data from a CSV file — read_sheet • a360importer</title>
 
 
 <!-- jquery -->
@@ -35,12 +35,11 @@
 
 
 
-<meta property="og:title" content="Read multiple data files (CSV) — load_files" />
-<meta property="og:description" content="This function reads multiple CSV files in a table format and
-returns a list of data frames from them, with the names corresponding to the
-file names. By default  it loads all CSV files in the specified path. You can
-choose what files to read by specifying the name or a regular expression in
-the pattern." />
+<meta property="og:title" content="Read data from a CSV file — read_sheet" />
+<meta property="og:description" content="This function reads a single CSV file in table format and returns
+ a data frame from it, with cases corresponding to lines and variables to
+ fields in the file. It supports reading of files which are seperated with a
+ comma or semi-colon." />
 <meta name="twitter:card" content="summary" />
 
 
@@ -121,72 +120,57 @@ the pattern." />
 <div class="row">
   <div class="col-md-9 contents">
     <div class="page-header">
-    <h1>Read multiple data files (CSV)</h1>
+    <h1>Read data from a CSV file</h1>
     <small class="dont-index">Source: <a href='https://github.com/INyabuto/a360importer/blob/master/R/load_files.R'><code>R/load_files.R</code></a></small>
-    <div class="hidden name"><code>load_files.Rd</code></div>
+    <div class="hidden name"><code>read_sheet.Rd</code></div>
     </div>
 
     <div class="ref-description">
-    <p>This function reads multiple CSV files in a table format and
-returns a list of data frames from them, with the names corresponding to the
-file names. By default  it loads all CSV files in the specified path. You can
-choose what files to read by specifying the name or a regular expression in
-the pattern.</p>
+    <p>This function reads a single CSV file in table format and returns
+ a data frame from it, with cases corresponding to lines and variables to
+ fields in the file. It supports reading of files which are seperated with a
+ comma or semi-colon.</p>
     </div>
 
-    <pre class="usage"><span class='fu'>load_files</span>(<span class='kw'>path</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='kw'>pattern</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='kw'>ignore.case</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>, <span class='no'>...</span>)</pre>
+    <pre class="usage"><span class='fu'>read_sheet</span>(<span class='no'>file</span>, <span class='no'>...</span>)</pre>
 
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">
     <colgroup><col class="name" /><col class="desc" /></colgroup>
     <tr>
-      <th>path</th>
-      <td><p>a character vector of full path name of the directory to read
-from.</p></td>
-    </tr>
-    <tr>
-      <th>pattern</th>
-      <td><p>character string containing a regular expression (or a human
-readable string).</p></td>
-    </tr>
-    <tr>
-      <th>ignore.case</th>
-      <td><p>logical. Should pattern be case-insensitive?</p></td>
+      <th>file</th>
+      <td><p>Either a path to a file, a connection, or literal data (either a
+single string or a raw vector). Files ending in .gz, .bz2, .xz, or .zip will
+be automatically uncompressed. Files starting with http://, https://,
+ftp://, or ftps:// will be automatically downloaded. Remote gz files can
+also be automatically downloaded and decompressed. Literal data is most
+useful for examples and tests. It must contain at least one new line to be
+recognised as data (instead of a path) or be a vector of greater than length
+Using a value of <code><a href='https://rdrr.io/r/base/connections.html'>clipboard()</a></code> will read from the system
+clipboard.</p></td>
     </tr>
     <tr>
       <th>...</th>
-      <td><p>Additional argument passed to <code><a href='read_sheet.html'>read_sheet</a></code></p></td>
+      <td><p>Additional arguments.</p></td>
     </tr>
     </table>
 
     <h2 class="hasAnchor" id="value"><a class="anchor" href="#value"></a>Value</h2>
 
-    <p>A list of data frame with names corresponding to the file names. If
-  there is an error in the files, only a list with passed data frames will be
-  returned.</p>
+    <p>A <code><a href='https://tibble.tidyverse.org/reference/tibble.html'>tibble()</a></code>. If there are parsing
+ problems, a warning tells you how many, and you can retrieve the details
+ with  <code><a href='https://readr.tidyverse.org/reference/problems.html'>problems()</a></code>.</p>
     <h2 class="hasAnchor" id="details"><a class="anchor" href="#details"></a>Details</h2>
 
-    <p><code>load_files</code> is used to extract data from multiple CSV files in
-preparation for the import. It constructs and maps different paths to the
-<code>read_sheet</code> function.</p>
-    <h2 class="hasAnchor" id="note"><a class="anchor" href="#note"></a>Note</h2>
+    <p><code>read_sheet</code> is used in the <code><a href='load_files.html'>load_files</a></code> to load
+ multiple files, you can also use it indepently to load a single file. It wraps and uses
+ the <code><a href='https://readr.tidyverse.org/reference/read_delim.html'>read_csv</a></code> and <code><a href='https://readr.tidyverse.org/reference/read_delim.html'>read_csv2</a></code> under
+ the hood to load files.</p>
+    <h2 class="hasAnchor" id="see-also"><a class="anchor" href="#see-also"></a>See also</h2>
 
-    <p>Files must be comma separated or in a valid CSV format.</p>
-<p>Files must abide to the project codes and naming standards.</p>
-<p>Path must reference to a valid directory with the project files.</p>
+    <div class='dont-index'><p><code><a href='https://readr.tidyverse.org/reference/read_delim.html'>read_csv</a></code> and <code><a href='https://readr.tidyverse.org/reference/read_delim.html'>read_csv2</a></code>
+ functions from readr.</p></div>
 
-    <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
-    <pre class="examples"><div class='input'><span class='kw'>if</span> (<span class='fl'>FALSE</span>) {
-<span class='co'># read all the csv files in the specified path</span>
-<span class='no'>path</span> <span class='kw'>&lt;-</span> <span class='st'>"./historical files/NG A360 Master Data- Final Cleaned April &amp; May 19"</span>
-<span class='no'>data</span> <span class='kw'>&lt;-</span> <span class='fu'>load_files</span>(<span class='no'>path</span>)
-
-<span class='co'># load attendance csv files</span>
-<span class='no'>attendance</span> <span class='kw'>&lt;-</span> <span class='fu'>load_files</span>(<span class='no'>path</span>, <span class='kw'>pattern</span> <span class='kw'>=</span> <span class='st'>"Attendance"</span>)
-
-<span class='co'># load service provision csv files</span>
-<span class='no'>sp</span> <span class='kw'>&lt;-</span> <span class='fu'>load_files</span>(<span class='no'>path</span>, <span class='kw'>pattern</span> <span class='kw'>=</span> <span class='st'>"Service Provision"</span>)
-}</div></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">
     <h2>Contents</h2>
@@ -194,8 +178,7 @@ preparation for the import. It constructs and maps different paths to the
       <li><a href="#arguments">Arguments</a></li>
       <li><a href="#value">Value</a></li>
       <li><a href="#details">Details</a></li>
-      <li><a href="#note">Note</a></li>
-      <li><a href="#examples">Examples</a></li>
+      <li><a href="#see-also">See also</a></li>
     </ul>
 
   </div>

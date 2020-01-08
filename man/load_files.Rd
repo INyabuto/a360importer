@@ -2,21 +2,55 @@
 % Please edit documentation in R/load_files.R
 \name{load_files}
 \alias{load_files}
-\title{Load A360 NG legacy files into R}
+\title{Read multiple data files (CSV)}
 \usage{
-load_files(path)
+load_files(path = NULL, pattern = NULL, ignore.case = FALSE, ...)
 }
 \arguments{
-\item{path}{System path to the directory with data.}
+\item{path}{a character vector of full path name of the directory to read
+from.}
+
+\item{pattern}{character string containing a regular expression (or a human
+readable string).}
+
+\item{ignore.case}{logical. Should pattern be case-insensitive?}
+
+\item{...}{Additional argument passed to \code{\link{read_sheet}}}
 }
 \value{
-A list of data frames
+A list of data frame with names corresponding to the file names. If
+  there is an error in the files, only a list with passed data frames will be
+  returned.
 }
 \description{
-\code{load_files} loads A360 legacy files in the specified directory into R
+This function reads multiple CSV files in a table format and
+returns a list of data frames from them, with the names corresponding to the
+file names. By default  it loads all CSV files in the specified path. You can
+choose what files to read by specifying the name or a regular expression in
+the pattern.
+}
+\details{
+\code{load_files} is used to extract data from multiple CSV files in
+preparation for the import. It constructs and maps different paths to the
+\code{read_sheet} function.
+}
+\note{
+Files must be comma separated or in a valid CSV format.
+
+Files must abide to the project codes and naming standards.
+
+Path must reference to a valid directory with the project files.
 }
 \examples{
 \dontrun{
-load_files(file.path(Sys.getenv("HOME"),"data")
+# read all the csv files in the specified path
+path <- "./historical files/NG A360 Master Data- Final Cleaned April & May 19"
+data <- load_files(path)
+
+# load attendance csv files
+attendance <- load_files(path, pattern = "Attendance")
+
+# load service provision csv files
+sp <- load_files(path, pattern = "Service Provision")
 }
 }
