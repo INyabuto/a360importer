@@ -85,20 +85,25 @@
 </h1></div>
 <!-- badges: start -->
 
-<p>a360importer is an R package used in the preparation, transformation and loading of A360 historical file into <a href="https://data.psi-mis.org">production</a>.</p>
-<p>It provides key functions for manipulating and uploading A360 historical files efficiently.</p>
-<ul>
-<li>
-<code><a href="reference/load_files.html">load_files()</a></code> effectively loads A360 legacy files into R</li>
-<li>
-<code>remove_empty_rows()</code> checks for the empty rows on the file and removes them.</li>
-<li>
-<code>remove_nas()</code> check for ‘NAs’ and turns them into an empty strings</li>
-<li>
-<code><a href="reference/generate_payload.html">generate_payload()</a></code> compiles the files into a payload ready for upload.</li>
-<li>
-<code><a href="reference/upload.html">upload()</a></code> push the payloads into production</li>
-</ul>
+<div id="overview" class="section level2">
+<h2 class="hasAnchor">
+<a href="#overview" class="anchor"></a>Overview</h2>
+<p>The goal of a360importer is to provide a fast, efficient, and most reliable way of uploading <a href="http://www.a360learninghub.org/">A360</a> historical data into the <a href="https://data.psi-mis.org">PSI-MIS</a>.</p>
+<!--
+The goal of a360importer is to provide a fa
+
+a360importer is an R package used in the preparation, transformation and loading of A360 historical file into [production](https://data.psi-mis.org). 
+
+It provides key functions for manipulating and uploading A360 historical files efficiently. 
+-->
+<!--
+- `load_files()` effectively loads A360 legacy files into R
+- `remove_empty_rows()` checks for the empty rows on the file and removes them.
+- `remove_nas()` check for 'NAs' and turns them into an empty strings
+- `generate_payload()` compiles the files into a payload ready for upload. 
+- `upload()` push the payloads into production  
+-->
+</div>
 <div id="installation" class="section level2">
 <h2 class="hasAnchor">
 <a href="#installation" class="anchor"></a>Installation</h2>
