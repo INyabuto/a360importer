@@ -41,7 +41,7 @@ load_files <- function(path = NULL, pattern = NULL, ignore.case = FALSE, ...){
   # is path valid?
   check_path(path)
 
-  pattern <- "\\.csv$"
+  #pattern <- "\\.csv$"
 
   if (!is.null(pattern)){
     pattern <- pattern
